@@ -1,5 +1,5 @@
-name: hash_name
-description: A new Flutter project.
+name: hasher
+description: Hasher House Harriers App ( runner club client app ).
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.

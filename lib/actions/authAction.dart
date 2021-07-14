@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:hash_name/config.dart';
+import 'package:hasher/config.dart';
 import 'package:http/http.dart' as http;
 
 Future<Result> loginAction(String email, String password) async {

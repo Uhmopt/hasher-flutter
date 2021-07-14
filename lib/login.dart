@@ -2,11 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hash_name/actions/authAction.dart';
-import 'package:hash_name/config.dart';
-import 'package:hash_name/forgetPassword.dart';
-import 'package:hash_name/helper/helpers.dart';
-import 'package:hash_name/signUp.dart';
+import 'package:hasher/actions/authAction.dart';
+import 'package:hasher/config.dart';
+import 'package:hasher/forgetPassword.dart';
+import 'package:hasher/helper/helpers.dart';
+import 'package:hasher/signUp.dart';
 
 class Login extends StatefulWidget {
   Login({Key? key}) : super(key: key);

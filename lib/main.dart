@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hash_name/config.dart';
-import 'package:hash_name/login.dart';
+import 'package:hasher/config.dart';
+import 'package:hasher/login.dart';
 
 void init() async {
   // init camera

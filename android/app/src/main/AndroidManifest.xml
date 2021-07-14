@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.hash_name">
+    package="com.example.hasher">
    <application
-        android:label="hash_name"
+        android:label="hasher"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

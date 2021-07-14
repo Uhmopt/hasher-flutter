@@ -1,6 +1,6 @@
 {
-    "name": "hash_name",
-    "short_name": "hash_name",
+    "name": "hasher",
+    "short_name": "hasher",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

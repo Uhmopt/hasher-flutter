@@ -1,6 +1,6 @@
-# hash_name
+# Hasher
 
-A new Flutter project.
+Hasher House Harriers App ( runner club client app ).
 
 ## Getting Started
 

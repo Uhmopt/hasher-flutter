@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:hash_name/actions/authAction.dart';
-import 'package:hash_name/config.dart';
-import 'package:hash_name/helper/helpers.dart';
-import 'package:hash_name/login.dart';
+import 'package:hasher/actions/authAction.dart';
+import 'package:hasher/config.dart';
+import 'package:hasher/helper/helpers.dart';
+import 'package:hasher/login.dart';
 
 const String page_title = 'Sign Up';
 
