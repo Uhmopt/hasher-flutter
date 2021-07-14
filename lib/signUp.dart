@@ -122,12 +122,14 @@ class _SignupState extends State<Signup> {
             Container(
                 padding: const EdgeInsets.only(top: 25),
                 child: Center(
+                    child: ClipRRect(
                   child: (_avatarImage == null)
                       ? Image.asset('images/profile.jpg',
                           width: 100, height: 100, fit: BoxFit.cover)
                       : Image.file(File(_avatarImage!.path.toString()),
                           width: 100, height: 100, fit: BoxFit.cover),
-                )),
+                  borderRadius: BorderRadius.circular(50),
+                ))),
             Container(
               child: Wrap(
                 // scrollDirection: Axis.horizontal,
