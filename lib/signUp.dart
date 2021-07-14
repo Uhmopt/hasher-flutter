@@ -34,6 +34,20 @@ class _SignupState extends State<Signup> {
   final ImagePicker _picker = ImagePicker();
   PickedFile? _avatarImage;
 
+  Future _selectDate(TextEditingController tc) async {
+    final picked = await showDatePicker(
+        context: context,
+        initialDate: new DateTime.now(),
+        firstDate: new DateTime(1950),
+        lastDate: new DateTime.now());
+    if (picked != null)
+      setState(() => tc.text = picked.year.toString() +
+          '-' +
+          picked.month.toString() +
+          '-' +
+          picked.day.toString());
+  }
+
   _handleTakeCameraPhoto() async {
     try {
       final _pickedImage = await _picker.getImage(source: ImageSource.camera);
@@ -87,6 +101,9 @@ class _SignupState extends State<Signup> {
         }
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text("Successfully signed!")));
+        // redirect to login
+        // Navigator.push(
+        //     context, MaterialPageRoute(builder: (context) => Login()));
         return value;
       });
     }
@@ -243,6 +260,12 @@ class _SignupState extends State<Signup> {
                   Container(
                     padding: const EdgeInsets.only(top: 25),
                     child: TextFormField(
+                      onTap: () {
+                        // Below line stops keyboard from appearing
+                        FocusScope.of(context).requestFocus(new FocusNode());
+                        // Show Date Picker Here
+                        _selectDate(_controllerBirth);
+                      },
                       controller: _controllerBirth,
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
@@ -255,12 +278,18 @@ class _SignupState extends State<Signup> {
                         prefixIcon: Icon(Icons.date_range),
                         isDense: true,
                       ),
-                      keyboardType: TextInputType.datetime,
+                      enableInteractiveSelection: false,
                     ),
                   ),
                   Container(
                     padding: const EdgeInsets.only(top: 25),
                     child: TextFormField(
+                      onTap: () {
+                        // Below line stops keyboard from appearing
+                        FocusScope.of(context).requestFocus(new FocusNode());
+                        // Show Date Picker Here
+                        _selectDate(_controllerFirstrun);
+                      },
                       controller: _controllerFirstrun,
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
@@ -273,7 +302,7 @@ class _SignupState extends State<Signup> {
                         prefixIcon: Icon(Icons.event),
                         isDense: true,
                       ),
-                      keyboardType: TextInputType.datetime,
+                      enableInteractiveSelection: false,
                     ),
                   ),
                   Container(
