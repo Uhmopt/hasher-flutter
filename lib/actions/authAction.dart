@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'package:hasher/config.dart';
 import 'package:http/http.dart' as http;
 
@@ -64,6 +65,33 @@ Future<Result> signUpAction(
     body: data,
   );
 
+  if (response.statusCode == 200) {
+    try {
+      return Result.fromJson(jsonDecode(response.body));
+    } catch (e) {
+      return Result(status: 'fail');
+    }
+  } else {
+    return Result(status: 'fail');
+    // throw Exception('Failed to create Result.');
+  }
+}
+
+Future<Result> forgotAction(String email) async {
+  Map<String, String> headers = {
+    "content-type": "application/x-www-form-urlencoded; charset=utf-8"
+  };
+
+  var data = new Map<String, String>();
+  data['email'] = email;
+
+  final response = await http.post(
+    Uri.parse(apiBase + '/forgot_mo.php'),
+    headers: headers,
+    encoding: Encoding.getByName("utf-8"),
+    body: data,
+  );
+  log(response.body);
   if (response.statusCode == 200) {
     try {
       return Result.fromJson(jsonDecode(response.body));
