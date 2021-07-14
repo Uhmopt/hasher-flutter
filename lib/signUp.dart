@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:hasher/actions/authAction.dart';
 import 'package:hasher/config.dart';
 import 'package:hasher/helper/helpers.dart';
 import 'package:hasher/login.dart';
+import 'package:image_picker/image_picker.dart';
 
 const String page_title = 'Sign Up';
 
@@ -29,7 +31,38 @@ class _SignupState extends State<Signup> {
   TextEditingController _controllerPasswordConfirm =
       TextEditingController(text: '');
 
-  _handleTakeCameraPhoto() {}
+  final ImagePicker _picker = ImagePicker();
+  PickedFile? _avatarImage;
+
+  _handleTakeCameraPhoto() async {
+    try {
+      final _pickedImage = await _picker.getImage(source: ImageSource.camera);
+      setState(() {
+        _avatarImage = _pickedImage;
+      });
+    } catch (e) {
+      setState(() {
+        _avatarImage = null;
+      });
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Can not connect to camera!")));
+    }
+  }
+
+  _handleTakeGalleryPhoto() async {
+    try {
+      final _pickedImage = await _picker.getImage(source: ImageSource.gallery);
+      setState(() {
+        _avatarImage = _pickedImage;
+      });
+    } catch (e) {
+      setState(() {
+        _avatarImage = null;
+      });
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Can not connect to camera!")));
+    }
+  }
 
   _handleSubmit() {
     if (_signUpForm.currentState!.validate()) {
@@ -42,7 +75,10 @@ class _SignupState extends State<Signup> {
         _controllerBirth.text,
         _controllerFirstrun.text,
         _controllerPassword.text,
-        defaultAvatar,
+        (_avatarImage == null)
+            ? defaultAvatar
+            : base64Encode(
+                File(_avatarImage!.path.toString()).readAsBytesSync()),
       ).then((value) {
         if (value.status == "fail") {
           ScaffoldMessenger.of(context)
@@ -69,8 +105,11 @@ class _SignupState extends State<Signup> {
             Container(
                 padding: const EdgeInsets.only(top: 25),
                 child: Center(
-                  child: Image.asset('images/profile.jpg',
-                      width: 100, height: 100, fit: BoxFit.cover),
+                  child: (_avatarImage == null)
+                      ? Image.asset('images/profile.jpg',
+                          width: 100, height: 100, fit: BoxFit.cover)
+                      : Image.file(File(_avatarImage!.path.toString()),
+                          width: 100, height: 100, fit: BoxFit.cover),
                 )),
             Container(
               child: Wrap(
@@ -93,7 +132,7 @@ class _SignupState extends State<Signup> {
                   ),
                   Container(
                     child: TextButton(
-                        onPressed: () {},
+                        onPressed: _handleTakeGalleryPhoto,
                         child: Row(children: [
                           Icon(
                             Icons.add_photo_alternate,
