@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:hasher/config.dart';
 import 'package:hasher/login.dart';
 
@@ -51,6 +52,9 @@ class MyApp extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(borderRadius)))),
       ),
       home: Login(),
+      builder: (BuildContext context, Widget? child) {
+        return FlutterSmartDialog(child: child);
+      },
     );
   }
 }

@@ -2,7 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:hasher/actions/authAction.dart';
+import 'package:hasher/components/dialogs.dart';
 import 'package:hasher/config.dart';
 import 'package:hasher/forgetPassword.dart';
 import 'package:hasher/helper/helpers.dart';
@@ -23,16 +25,16 @@ class _LoginState extends State<Login> {
 
   _handleSubmit() {
     if (_loginForm.currentState!.validate()) {
+      showLoading();
       loginAction(_controllerEmail.text, _controllerPassword.text)
           .then((value) {
+        SmartDialog.dismiss();
         if (value.status == 'success') {
           _controllerPassword.clear();
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text("Successfully Login: " + _controllerEmail.text)));
+          showMessage("Successfully Login: " + _controllerEmail.text);
         } else {
           _controllerPassword.clear();
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text("Login Failed!")));
+          showMessage("Login Failed!");
         }
         return value;
       });

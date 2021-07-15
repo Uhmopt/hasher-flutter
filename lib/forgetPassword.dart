@@ -2,7 +2,9 @@ import 'dart:developer';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:hasher/actions/authAction.dart';
+import 'package:hasher/components/dialogs.dart';
 import 'package:hasher/helper/helpers.dart';
 
 const String page_title = 'Forget Password';
@@ -20,15 +22,15 @@ class ForgetPasswordState extends State<ForgetPassword> {
 
   _handleSubmit() {
     if (_forgetPasswordForm.currentState!.validate()) {
+      showLoading();
       forgotAction(_controllerEmail.text).then((value) {
+        SmartDialog.dismiss();
         if (value.status == 'success') {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text("Password Resetted! You will receive an email: " +
-                  _controllerEmail.text)));
+          showMessage("Password Resetted! You will receive an email: " +
+              _controllerEmail.text);
           return value;
         }
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Please enter a valid email!")));
+        showMessage("Please enter a valid email!");
         return value;
       });
     }

@@ -3,7 +3,9 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:hasher/actions/authAction.dart';
+import 'package:hasher/components/dialogs.dart';
 import 'package:hasher/config.dart';
 import 'package:hasher/helper/helpers.dart';
 import 'package:hasher/login.dart';
@@ -58,8 +60,7 @@ class _SignupState extends State<Signup> {
       setState(() {
         _avatarImage = null;
       });
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Can not connect to camera!")));
+      showMessage("Can not connect to camera!");
     }
   }
 
@@ -73,12 +74,12 @@ class _SignupState extends State<Signup> {
       setState(() {
         _avatarImage = null;
       });
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Can not connect to camera!")));
+      showMessage("Can not open gallery!");
     }
   }
 
   _handleSubmit() {
+    showLoading();
     if (_signUpForm.currentState!.validate()) {
       signUpAction(
         _controllerFirst.text,
@@ -94,13 +95,12 @@ class _SignupState extends State<Signup> {
             : base64Encode(
                 File(_avatarImage!.path.toString()).readAsBytesSync()),
       ).then((value) {
+        SmartDialog.dismiss();
         if (value.status == "fail") {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text("Sign up Failed!")));
+          showMessage("Sign up Failed!");
           return value;
         }
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("Successfully signed!")));
+        showMessage("Successfully signed!");
         // redirect to login
         // Navigator.push(
         //     context, MaterialPageRoute(builder: (context) => Login()));
