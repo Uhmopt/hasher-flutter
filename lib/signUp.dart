@@ -81,31 +81,36 @@ class _SignupState extends State<Signup> {
   _handleSubmit() {
     showLoading();
     if (_signUpForm.currentState!.validate()) {
-      signUpAction(
-        _controllerFirst.text,
-        _controllerLast.text,
-        _controllerHash.text,
-        _controllerEmail.text,
-        _controllerPhone.text,
-        _controllerBirth.text,
-        _controllerFirstrun.text,
-        _controllerPassword.text,
-        (_avatarImage == null)
-            ? defaultAvatar
-            : base64Encode(
-                File(_avatarImage!.path.toString()).readAsBytesSync()),
-      ).then((value) {
-        SmartDialog.dismiss();
-        if (value.status == "fail") {
-          showMessage("Sign up Failed!");
+      try {
+        signUpAction(
+          _controllerFirst.text,
+          _controllerLast.text,
+          _controllerHash.text,
+          _controllerEmail.text,
+          _controllerPhone.text,
+          _controllerBirth.text,
+          _controllerFirstrun.text,
+          _controllerPassword.text,
+          (_avatarImage == null)
+              ? defaultAvatar
+              : base64Encode(
+                  File(_avatarImage!.path.toString()).readAsBytesSync()),
+        ).then((value) {
+          SmartDialog.dismiss();
+          if (value.status == "fail") {
+            showMessage("Sign up Failed!");
+            return value;
+          }
+          showMessage("Successfully signed!");
+          // redirect to login
+          // Navigator.push(
+          //     context, MaterialPageRoute(builder: (context) => Login()));
           return value;
-        }
-        showMessage("Successfully signed!");
-        // redirect to login
-        // Navigator.push(
-        //     context, MaterialPageRoute(builder: (context) => Login()));
-        return value;
-      });
+        });
+      } catch (e) {
+        SmartDialog.dismiss();
+        showMessage("Can not connect to the internet!");
+      }
     }
   }
 

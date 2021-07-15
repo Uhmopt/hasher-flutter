@@ -23,16 +23,21 @@ class ForgetPasswordState extends State<ForgetPassword> {
   _handleSubmit() {
     if (_forgetPasswordForm.currentState!.validate()) {
       showLoading();
-      forgotAction(_controllerEmail.text).then((value) {
-        SmartDialog.dismiss();
-        if (value.status == 'success') {
-          showMessage("Password Resetted! You will receive an email: " +
-              _controllerEmail.text);
+      try {
+        forgotAction(_controllerEmail.text).then((value) {
+          SmartDialog.dismiss();
+          if (value.status == 'success') {
+            showMessage("Password Resetted! You will receive an email: " +
+                _controllerEmail.text);
+            return value;
+          }
+          showMessage("Please enter a valid email!");
           return value;
-        }
-        showMessage("Please enter a valid email!");
-        return value;
-      });
+        });
+      } catch (e) {
+        SmartDialog.dismiss();
+        showMessage("Can not connect to the internet!");
+      }
     }
   }
 

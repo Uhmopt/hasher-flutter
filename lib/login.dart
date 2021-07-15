@@ -26,18 +26,22 @@ class _LoginState extends State<Login> {
   _handleSubmit() {
     if (_loginForm.currentState!.validate()) {
       showLoading();
-      loginAction(_controllerEmail.text, _controllerPassword.text)
-          .then((value) {
+      try {
+        loginAction(_controllerEmail.text, _controllerPassword.text)
+            .then((value) {
+          SmartDialog.dismiss();
+          if (value.status == 'success') {
+            showMessage("Successfully Logged in: " + _controllerEmail.text);
+          } else {
+            _controllerPassword.clear();
+            showMessage("Email or Password incorrect!");
+          }
+          return value;
+        });
+      } catch (e) {
         SmartDialog.dismiss();
-        if (value.status == 'success') {
-          _controllerPassword.clear();
-          showMessage("Successfully Login: " + _controllerEmail.text);
-        } else {
-          _controllerPassword.clear();
-          showMessage("Login Failed!");
-        }
-        return value;
-      });
+        showMessage("Can not connect to the internet!");
+      }
     }
   }
 
