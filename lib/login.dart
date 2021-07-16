@@ -1,12 +1,15 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:hasher/actions/authAction.dart';
+import 'package:hasher/actions/hasherAction.dart';
 import 'package:hasher/components/dialogs.dart';
 import 'package:hasher/components/logo.dart';
 import 'package:hasher/config.dart';
+import 'package:hasher/constant.dart';
 import 'package:hasher/forgetPassword.dart';
 import 'package:hasher/helper/helpers.dart';
 import 'package:hasher/home.dart';
@@ -29,20 +32,33 @@ class _LoginState extends State<Login> {
   _handleSubmit() {
     if (_loginForm.currentState!.validate()) {
       showLoading();
+      String email = _controllerEmail.text;
+      String password = _controllerPassword.text;
       try {
-        loginAction(_controllerEmail.text, _controllerPassword.text)
-            .then((value) {
-          SmartDialog.dismiss();
+        loginAction(email, password).then((value) {
           if (value.status == 'success') {
-            showMessage("Successfully Logged in: " + _controllerEmail.text);
             SharedPreferences.getInstance().then((prefs) {
-              prefs.setBool('Auth', true).then((value) {
+              prefs.setBool(PREF_AUTH, true).then((value) {
                 log("logged in");
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Home(),
-                    ));
+                basicHasherInfo(email).then((hasher) {
+                  // save preferences
+                  prefs.setString(PREF_HASHER, jsonEncode(hasher.toJson()));
+                  prefs.setInt(PREF_HASHER_ID, hasher.id);
+                  prefs.setString(PREF_HASHER_NAME, hasher.hashname);
+                  prefs.setString(PREF_EMAIL, hasher.hashname);
+
+                  // close modal and show message
+                  SmartDialog.dismiss();
+                  showMessage("Successfully Logged in: " + email);
+
+                  // redirect
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Home(),
+                      ));
+                  return hasher;
+                });
                 return value;
               });
               return prefs;
