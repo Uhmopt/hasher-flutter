@@ -19,7 +19,7 @@ Future<Hasher> basicHasherInfo(String email) async {
     body: data,
   );
 
-  log(response.body);
+  // log(response.body);
   if (response.statusCode == 200) {
     try {
       return Hasher.fromJson(jsonDecode(response.body));

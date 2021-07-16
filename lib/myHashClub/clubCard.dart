@@ -2,11 +2,14 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hasher/actions/hashesAction.dart';
 import 'package:hasher/components/blueLabelText.dart';
 import 'package:hasher/components/checkBox.dart';
 
+// ignore: must_be_immutable
 class ClubCard extends StatefulWidget {
-  ClubCard({Key? key}) : super(key: key);
+  Hash? hash = Hash();
+  ClubCard({Key? key, this.hash}) : super(key: key);
 
   @override
   _ClubCardState createState() => _ClubCardState();
@@ -18,14 +21,14 @@ class _ClubCardState extends State<ClubCard> {
     return Container(
       child: Card(
         elevation: 10,
-        margin: const EdgeInsets.all(5),
+        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
         child: Container(
           padding: const EdgeInsets.all(10),
           child: Column(
             children: [
               Center(
                 child: Text(
-                  'Title',
+                  widget.hash!.hashclubname,
                   textScaleFactor: 1.7,
                   style: TextStyle(
                       fontWeight: FontWeight.bold, color: Colors.pinkAccent),
@@ -33,8 +36,11 @@ class _ClubCardState extends State<ClubCard> {
               ),
               Column(
                 children: [
-                  BlueLabelText(label: 'Joined On', value: '01/01/2020'),
-                  BlueLabelText(label: 'You have done', value: '2 Runs'),
+                  BlueLabelText(
+                      label: 'Joined On', value: widget.hash!.rundate),
+                  BlueLabelText(
+                      label: 'You have done',
+                      value: widget.hash!.total_runs.toString() + ' Runs'),
                   BlueLabelText(
                       label: 'Run Area Country', value: 'Country Name'),
                 ],

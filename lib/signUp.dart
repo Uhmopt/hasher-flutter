@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:hasher/actions/authAction.dart';
+import 'package:hasher/components/avatar.dart';
 import 'package:hasher/components/dialogs.dart';
 import 'package:hasher/config.dart';
 import 'package:hasher/helper/helpers.dart';
@@ -101,10 +102,10 @@ class _SignupState extends State<Signup> {
             showMessage("Sign up Failed!");
             return value;
           }
-          showMessage("Successfully signed!");
+          showMessage("Successfully signed up! Please Log in.");
           // redirect to login
-          // Navigator.push(
-          //     context, MaterialPageRoute(builder: (context) => Login()));
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Login()));
           return value;
         });
       } catch (e) {
@@ -127,13 +128,10 @@ class _SignupState extends State<Signup> {
             Container(
                 padding: const EdgeInsets.only(top: 25),
                 child: Center(
-                    child: ClipRRect(
-                  child: (_avatarImage == null)
-                      ? Image.asset('images/profile.jpg',
-                          width: 100, height: 100, fit: BoxFit.cover)
-                      : Image.file(File(_avatarImage!.path.toString()),
-                          width: 100, height: 100, fit: BoxFit.cover),
-                  borderRadius: BorderRadius.circular(50),
+                    child: Avatar(
+                  src:
+                      _avatarImage == null ? '' : _avatarImage!.path.toString(),
+                  size: 100,
                 ))),
             Container(
               child: Wrap(
