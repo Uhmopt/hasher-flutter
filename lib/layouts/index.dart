@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hasher/components/avatar.dart';
 import 'package:hasher/config.dart';
 import 'package:hasher/layouts/drawer.dart';
 
@@ -18,9 +19,11 @@ class _HashLayoutState extends State<HashLayout> {
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
+        appBar: AppBar(title: Text(widget.title), actions: [
+          Container(
+              padding: const EdgeInsets.all(10),
+              child: InternalAvatar(size: 40))
+        ]),
         body: widget.body,
         drawer: HashDrawer(),
       ),

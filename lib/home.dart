@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hasher/layouts/index.dart';
+import 'package:hasher/myHashClub/myHashClub.dart';
 
 class Home extends StatefulWidget {
   Home({Key? key}) : super(key: key);
@@ -11,10 +12,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return HashLayout(
-        title: 'My Hash Clubs',
-        body: ListView(
-          children: [Text("data")],
-        ));
+    return HashLayout(title: 'My Hash Clubs', body: MyHashClub());
   }
 }
