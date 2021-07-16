@@ -20,9 +20,7 @@ class _HashLayoutState extends State<HashLayout> {
     return Container(
       child: Scaffold(
         appBar: AppBar(title: Text(widget.title), actions: [
-          Container(
-              padding: const EdgeInsets.all(10),
-              child: InternalAvatar(size: 40))
+          Container(padding: const EdgeInsets.all(10), child: Avatar(size: 40))
         ]),
         body: widget.body,
         drawer: HashDrawer(),

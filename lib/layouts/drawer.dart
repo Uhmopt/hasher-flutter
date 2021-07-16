@@ -3,10 +3,33 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hasher/components/avatar.dart';
+import 'package:hasher/constant.dart';
 import 'package:hasher/layouts/menuButton.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class HashDrawer extends StatelessWidget {
-  const HashDrawer({Key? key}) : super(key: key);
+class HashDrawer extends StatefulWidget {
+  HashDrawer({Key? key}) : super(key: key);
+  @override
+  _HashDrawerState createState() => _HashDrawerState();
+}
+
+class _HashDrawerState extends State<HashDrawer> {
+  String _avatarPath = '';
+
+  @override
+  void initState() {
+    super.initState();
+    SharedPreferences.getInstance().then((prefs) {
+      print(prefs);
+      setState(() {
+        _avatarPath = prefs.getString(PREF_HASHER_AVATAR)!;
+
+        log(PREF_HASHER_AVATAR);
+        log(prefs.getString(PREF_HASHER_AVATAR)!);
+      });
+      return prefs;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +39,9 @@ class HashDrawer extends StatelessWidget {
           Container(
             padding: const EdgeInsets.only(top: 20, bottom: 20),
             child: Center(
-              child: InternalAvatar(),
+              child: Avatar(
+                src: _avatarPath,
+              ),
             ),
             color: Colors.indigoAccent,
           ),

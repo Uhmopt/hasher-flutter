@@ -41,22 +41,28 @@ class _LoginState extends State<Login> {
               prefs.setBool(PREF_AUTH, true).then((value) {
                 log("logged in");
                 basicHasherInfo(email).then((hasher) {
-                  // save preferences
-                  prefs.setString(PREF_HASHER, jsonEncode(hasher.toJson()));
-                  prefs.setInt(PREF_HASHER_ID, hasher.id);
-                  prefs.setString(PREF_HASHER_NAME, hasher.hashname);
-                  prefs.setString(PREF_EMAIL, hasher.hashname);
+                  if (hasher.status == 'success') {
+                    // save preferences
+                    prefs.setString(PREF_HASHER, jsonEncode(hasher.toJson()));
+                    prefs.setInt(PREF_HASHER_ID, hasher.id);
+                    prefs.setString(PREF_HASHER_NAME, hasher.hashname);
+                    prefs.setString(PREF_HASHER_AVATAR, hasher.base64image);
+                    prefs.setString(PREF_EMAIL, hasher.email);
 
-                  // close modal and show message
-                  SmartDialog.dismiss();
-                  showMessage("Successfully Logged in: " + email);
+                    // close modal and show message
+                    SmartDialog.dismiss();
+                    showMessage("Successfully Logged in: " + email);
 
-                  // redirect
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Home(),
-                      ));
+                    // redirect
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Home(),
+                        ));
+                  } else {
+                    SmartDialog.dismiss();
+                    showMessage("Unknow error occurred!");
+                  }
                   return hasher;
                 });
                 return value;

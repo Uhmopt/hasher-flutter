@@ -38,8 +38,8 @@ class Hasher {
   String email = '';
   String hashname = '';
   String base64image = '';
-  List<dynamic> hashes = [];
-  List<dynamic> toruns = [];
+  // List<dynamic> hashes = [];
+  // List<dynamic> toruns = [];
 
   Hasher({
     required this.status,
@@ -50,9 +50,10 @@ class Hasher {
   });
 
   factory Hasher.fromJson(Map<String, dynamic> json) {
+    log(json['id']);
     return Hasher(
       status: json['status'] ?? 'fail',
-      id: json['id'] ?? 0,
+      id: int.parse(json['id']),
       email: json['email'] ?? '',
       hashname: json['hashname'] ?? '',
       base64image: json['base64image'] ?? '',
