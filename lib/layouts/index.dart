@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hasher/components/avatar.dart';
 import 'package:hasher/config.dart';
+import 'package:hasher/constant.dart';
 import 'package:hasher/layouts/drawer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class HashLayout extends StatefulWidget {
@@ -15,12 +17,26 @@ class HashLayout extends StatefulWidget {
 }
 
 class _HashLayoutState extends State<HashLayout> {
+  String _avatar = '';
+  @override
+  void initState() {
+    super.initState();
+    SharedPreferences.getInstance().then((prefs) {
+      setState(() {
+        _avatar = prefs.getString(PREF_HASHER_AVATAR)!;
+      });
+      return prefs;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
         appBar: AppBar(title: Text(widget.title), actions: [
-          Container(padding: const EdgeInsets.all(10), child: Avatar(size: 40))
+          Container(
+              padding: const EdgeInsets.all(10),
+              child: Avatar(src: _avatar, size: 35))
         ]),
         body: widget.body,
         drawer: HashDrawer(),
