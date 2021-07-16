@@ -20,6 +20,7 @@ Future<Result> loginAction(String email, String password) async {
     body: data,
   );
 
+  log(response.body);
   if (response.statusCode == 200) {
     try {
       return Result.fromJson(jsonDecode(response.body));

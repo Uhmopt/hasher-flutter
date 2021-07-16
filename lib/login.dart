@@ -71,6 +71,7 @@ class _LoginState extends State<Login> {
             });
           } else {
             _controllerPassword.clear();
+            SmartDialog.dismiss();
             showMessage("Email or Password incorrect!");
           }
           return value;
