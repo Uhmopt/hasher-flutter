@@ -23,9 +23,6 @@ class _HashDrawerState extends State<HashDrawer> {
       print(prefs);
       setState(() {
         _avatarPath = prefs.getString(PREF_HASHER_AVATAR)!;
-
-        log(PREF_HASHER_AVATAR);
-        log(prefs.getString(PREF_HASHER_AVATAR)!);
       });
       return prefs;
     });
