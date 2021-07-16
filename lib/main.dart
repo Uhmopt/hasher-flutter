@@ -19,6 +19,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: appTitle,
+      home: Login(),
+      builder: (BuildContext context, Widget? child) {
+        return FlutterSmartDialog(child: child);
+      },
       theme: ThemeData(
               primarySwatch: Colors.indigo,
               brightness: Brightness.light,
@@ -51,10 +55,6 @@ class MyApp extends StatelessWidget {
                 borderSide: BorderSide(color: Colors.indigoAccent),
                 borderRadius: BorderRadius.all(Radius.circular(borderRadius)))),
       ),
-      home: Login(),
-      builder: (BuildContext context, Widget? child) {
-        return FlutterSmartDialog(child: child);
-      },
     );
   }
 }

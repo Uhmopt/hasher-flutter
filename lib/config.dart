@@ -1,4 +1,4 @@
-String appTitle = "Hash House Harriers";
+const String appTitle = "Hash House Harriers";
 String apiBase = "http://192.168.109.97:9999";
 double borderRadius = 12;
 String defaultAvatar =

@@ -5,10 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:hasher/actions/authAction.dart';
 import 'package:hasher/components/dialogs.dart';
+import 'package:hasher/components/logo.dart';
 import 'package:hasher/config.dart';
 import 'package:hasher/forgetPassword.dart';
 import 'package:hasher/helper/helpers.dart';
+import 'package:hasher/home.dart';
 import 'package:hasher/signUp.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   Login({Key? key}) : super(key: key);
@@ -32,6 +35,18 @@ class _LoginState extends State<Login> {
           SmartDialog.dismiss();
           if (value.status == 'success') {
             showMessage("Successfully Logged in: " + _controllerEmail.text);
+            SharedPreferences.getInstance().then((prefs) {
+              prefs.setBool('Auth', true).then((value) {
+                log("logged in");
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Home(),
+                    ));
+                return value;
+              });
+              return prefs;
+            });
           } else {
             _controllerPassword.clear();
             showMessage("Email or Password incorrect!");
@@ -59,10 +74,7 @@ class _LoginState extends State<Login> {
             children: [
               Container(
                   padding: const EdgeInsets.only(bottom: 20),
-                  child: Center(
-                    child: Image.asset('images/logo.png',
-                        width: 120, height: 120, fit: BoxFit.cover),
-                  )),
+                  child: new Logo(size: 120)),
               Container(
                 padding: const EdgeInsets.only(bottom: 20),
                 child: TextFormField(
