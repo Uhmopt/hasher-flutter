@@ -50,7 +50,6 @@ class Hasher {
   });
 
   factory Hasher.fromJson(Map<String, dynamic> json) {
-    log(json['id']);
     return Hasher(
       status: json['status'] ?? 'fail',
       id: int.parse(json['id']),
