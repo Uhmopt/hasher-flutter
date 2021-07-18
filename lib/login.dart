@@ -57,7 +57,7 @@ class _LoginState extends State<Login> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Home(),
+                          builder: (context) => Home(hashes: hasher.hashes),
                         ));
                   } else {
                     SmartDialog.dismiss();
