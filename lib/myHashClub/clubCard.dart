@@ -42,7 +42,8 @@ class _ClubCardState extends State<ClubCard> {
                       label: 'You have done',
                       value: widget.hash!.total_runs.toString() + ' Runs'),
                   BlueLabelText(
-                      label: 'Run Area Country', value: 'Country Name'),
+                      label: 'Run Area', value: widget.hash!.run_area),
+                  BlueLabelText(label: 'Country', value: widget.hash!.country),
                 ],
               ),
               Container(
@@ -76,14 +77,14 @@ class _ClubCardState extends State<ClubCard> {
                       flex: 6,
                       child: CheckBoxLabel(
                         label: 'Current Hash',
-                        value: true,
+                        value: widget.hash!.current,
                         onChanged: (v) {},
                       )),
                   Expanded(
                       flex: 4,
                       child: CheckBoxLabel(
                         label: 'Mother Hash',
-                        value: true,
+                        value: widget.hash!.mother,
                         onChanged: (v) {},
                       ))
                 ],
@@ -94,14 +95,14 @@ class _ClubCardState extends State<ClubCard> {
                       flex: 6,
                       child: CheckBoxLabel(
                         label: 'Committee Member',
-                        value: true,
+                        value: widget.hash!.committee,
                         onChanged: (v) {},
                       )),
                   Expanded(
                       flex: 4,
                       child: CheckBoxLabel(
                         label: 'Follow Hash',
-                        value: true,
+                        value: widget.hash!.last,
                         onChanged: (v) {},
                       ))
                 ],
