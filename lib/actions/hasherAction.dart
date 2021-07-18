@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:hasher/actions/hashesAction.dart';
 import 'package:hasher/config.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,7 +20,7 @@ Future<Hasher> basicHasherInfo(String email) async {
     body: data,
   );
 
-  // log(response.body);
+  log('basicHasherInfo: ' + response.body);
   if (response.statusCode == 200) {
     try {
       return Hasher.fromJson(jsonDecode(response.body));
@@ -34,35 +35,33 @@ Future<Hasher> basicHasherInfo(String email) async {
 
 class Hasher {
   String status = 'fail';
-  int id = 0;
   String email = '';
   String hashname = '';
   String base64image = '';
-  // List<dynamic> hashes = [];
+  List<Hash>? hashes;
   // List<dynamic> toruns = [];
 
   Hasher({
     required this.status,
-    this.id = 0,
     this.email = '',
     this.hashname = '',
     this.base64image = '',
+    this.hashes,
   });
 
   factory Hasher.fromJson(Map<String, dynamic> json) {
     return Hasher(
-      status: json['status'] ?? 'fail',
-      id: int.parse(json['id']),
-      email: json['email'] ?? '',
-      hashname: json['hashname'] ?? '',
-      base64image: json['base64image'] ?? '',
-    );
+        status: json['status'] ?? 'fail',
+        email: json['email'] ?? '',
+        hashname: json['hashname'] ?? '',
+        base64image: json['base64image'] ?? '',
+        hashes:
+            List<Hash>.from(json['hashes'].map((item) => Hash.fromJson(item))));
   }
 
   Map<String, dynamic> toJson() {
     return {
       'status': this.status,
-      'id': this.id,
       'email': this.email,
       'hashname': this.hashname,
       'base64image': this.base64image,

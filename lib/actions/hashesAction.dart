@@ -19,7 +19,7 @@ Future<Hashes> getMyHashes(String email) async {
     body: data,
   );
 
-  log(response.body);
+  log('getMyHashes: ' + response.body);
   if (response.statusCode == 200) {
     try {
       return Hashes.fromJson(jsonDecode(response.body));
@@ -33,14 +33,28 @@ Future<Hashes> getMyHashes(String email) async {
 }
 
 class Hash {
+  bool current = false;
+  bool last = false;
+  bool mother = false;
+  bool committee = false;
+  String country = '';
   int total_runs = 0;
+  String first_runs = '';
+  String run_area = '';
   String hashclubname = '';
   String rundate = '';
   int runnumber = 0;
   int clubid = 0;
 
   Hash({
+    this.current = false,
+    this.last = false,
+    this.mother = false,
+    this.committee = false,
+    this.country = '',
     this.total_runs = 0,
+    this.first_runs = '',
+    this.run_area = '',
     this.hashclubname = '',
     this.rundate = '',
     this.runnumber = 0,
@@ -49,11 +63,18 @@ class Hash {
 
   factory Hash.fromJson(Map<String, dynamic> json) {
     return Hash(
-      total_runs: int.parse(json['total_runs'] ?? ''),
-      hashclubname: json['hashclubname'] ?? '',
-      rundate: json['rundate'] ?? '',
-      runnumber: int.parse(json['runnumber'] ?? ''),
-      clubid: int.parse(json['clubid'] ?? ''),
+      current: int.parse(json['current'] ?? '0') == 1,
+      last: int.parse(json['last'] ?? '0') == 1,
+      mother: int.parse(json['mother'] ?? '0') == 1,
+      committee: int.parse(json['committee'] ?? '0') == 1,
+      country: (json['country'] ?? '').toString(),
+      total_runs: int.parse(json['total_runs'] ?? '0'),
+      first_runs: (json['first_runs'] ?? '').toString(),
+      run_area: (json['run_area'] ?? '').toString(),
+      hashclubname: (json['hashclubname'] ?? '').toString(),
+      rundate: (json['rundate'] ?? '').toString(),
+      runnumber: int.parse(json['runnumber'] ?? '0'),
+      clubid: int.parse(json['clubid'] ?? '0'),
     );
   }
 }

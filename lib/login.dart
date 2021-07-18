@@ -41,10 +41,10 @@ class _LoginState extends State<Login> {
               prefs.setBool(PREF_AUTH, true).then((value) {
                 log("logged in");
                 basicHasherInfo(email).then((hasher) {
+                  log(hasher.status);
                   if (hasher.status == 'success') {
                     // save preferences
                     prefs.setString(PREF_HASHER, jsonEncode(hasher.toJson()));
-                    prefs.setInt(PREF_HASHER_ID, hasher.id);
                     prefs.setString(PREF_HASHER_NAME, hasher.hashname);
                     prefs.setString(PREF_HASHER_AVATAR, hasher.base64image);
                     prefs.setString(PREF_EMAIL, hasher.email);
