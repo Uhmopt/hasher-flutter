@@ -90,12 +90,13 @@ class _SignupAvatarState extends State<SignupAvatar> {
             showMessage("An unknow error occoured. ( save photo )");
           }
         });
+      } else {
+        SmartDialog.dismiss();
+        showMessage("Destoryed Session.\nPlease log in again.");
+        // redirect to login
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Login()));
       }
-      SmartDialog.dismiss();
-      showMessage("Destoryed Session.\nPlease log in again.");
-      // redirect to login
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
-      return true;
     });
   }
 
@@ -198,11 +199,7 @@ class _SignupAvatarState extends State<SignupAvatar> {
         ),
         onWillPop: () async {
           // redirect
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Login(),
-              ));
+          Navigator.pop(context);
           return false;
         });
   }

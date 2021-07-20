@@ -34,22 +34,17 @@ class _HashLayoutState extends State<HashLayout> {
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
-        appBar: AppBar(
-            automaticallyImplyLeading: false,
-            title: Text(widget.title),
-            actions: [
-              Container(
-                padding: const EdgeInsets.all(10),
-                child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SignupAvatar()));
-                    },
-                    child: Avatar(src: _avatar, size: 35)),
-              )
-            ]),
+        appBar: AppBar(title: Text(widget.title), actions: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            child: GestureDetector(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SignupAvatar()));
+                },
+                child: Avatar(src: _avatar, size: 35)),
+          )
+        ]),
         body: widget.body,
         drawer: HashDrawer(),
       ),
