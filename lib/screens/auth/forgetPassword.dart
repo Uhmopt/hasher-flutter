@@ -19,16 +19,28 @@ class ForgetPassword extends StatefulWidget {
 class ForgetPasswordState extends State<ForgetPassword> {
   final GlobalKey<FormState> _forgetPasswordForm = GlobalKey<FormState>();
   TextEditingController _controllerEmail = TextEditingController(text: '');
+  bool _isReset = false;
 
   _handleSubmit() {
+    if (_isReset) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Login(),
+          ));
+      return;
+    }
     if (_forgetPasswordForm.currentState!.validate()) {
       showLoading();
       try {
         forgotAction(_controllerEmail.text).then((value) {
           SmartDialog.dismiss();
           if (value.status == 'success') {
-            showMessage("Password Resetted! You will receive an email: " +
+            showMessage("Password reset email has been sent to " +
                 _controllerEmail.text);
+            setState(() {
+              _isReset = true;
+            });
             return value;
           }
           showMessage("Please enter a valid email!");
@@ -90,7 +102,7 @@ class ForgetPasswordState extends State<ForgetPassword> {
                     Container(
                       child: ElevatedButton(
                         child: Text(
-                          'Send',
+                          _isReset ? 'CONTINUE' : 'RESET PASSWORD',
                           textScaleFactor: 1.4,
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
