@@ -23,18 +23,9 @@ class SignupAvatar extends StatefulWidget {
 }
 
 class _SignupAvatarState extends State<SignupAvatar> {
-  final GlobalKey<FormState> _signUpForm = GlobalKey<FormState>();
-  TextEditingController _controllerFirst = TextEditingController(text: '');
-  TextEditingController _controllerLast = TextEditingController(text: '');
-  TextEditingController _controllerHash = TextEditingController(text: '');
-  TextEditingController _controllerEmail = TextEditingController(text: '');
-  TextEditingController _controllerPhone = TextEditingController(text: '');
-  TextEditingController _controllerBirth = TextEditingController(text: '');
-  TextEditingController _controllerFirstrun = TextEditingController(text: '');
-  TextEditingController _controllerPassword = TextEditingController(text: '');
-
   final ImagePicker _picker = ImagePicker();
   PickedFile? _avatarImage;
+  String? _oldPath;
 
   _handleTakeCameraPhoto() async {
     try {
@@ -72,25 +63,30 @@ class _SignupAvatarState extends State<SignupAvatar> {
     showLoading();
     SharedPreferences.getInstance().then((prefs) {
       int id = prefs.getInt(PREF_HASHER_ID) ?? 0;
+      String email = prefs.getString(PREF_EMAIL) ?? '';
+      String password = prefs.getString(PREF_PASSWORD) ?? '';
       if (id > 0) {
         updateProfile(
           id: id,
           first: prefs.getString(PREF_HASHER_FIRST_NAME),
           last: prefs.getString(PREF_HASHER_LAST_NAME),
           hash: prefs.getString(PREF_HASHER_NAME),
-          email: prefs.getString(PREF_EMAIL),
+          email: email,
           phone: prefs.getString(PREF_HASHER_PHONE),
           birth: prefs.getString(PREF_HASHER_BIRTH),
           firstrun: prefs.getString(PREF_HASHER_FIRST_RUN),
           base64image: base64Encode(
               File(_avatarImage!.path.toString()).readAsBytesSync()),
         ).then((resilt) {
-          SmartDialog.dismiss();
           if (resilt.status == 'success') {
-            showMessage('Successfully uploaded');
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Home()));
+            loginAction(email, password).then((value) {
+              SmartDialog.dismiss();
+              showMessage('Successfully uploaded');
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Home()));
+            });
           } else {
+            SmartDialog.dismiss();
             showMessage("An unknow error occoured. ( save photo )");
           }
         });
@@ -101,39 +97,16 @@ class _SignupAvatarState extends State<SignupAvatar> {
       Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
       return true;
     });
-    if (_signUpForm.currentState!.validate()) {
-      try {
-        showLoading();
-        signUpAction(
-          _controllerFirst.text,
-          _controllerLast.text,
-          _controllerHash.text,
-          _controllerEmail.text,
-          _controllerPhone.text,
-          _controllerBirth.text,
-          _controllerFirstrun.text,
-          _controllerPassword.text,
-          (_avatarImage == null)
-              ? ''
-              : base64Encode(
-                  File(_avatarImage!.path.toString()).readAsBytesSync()),
-        ).then((value) {
-          SmartDialog.dismiss();
-          if (value.status == "fail") {
-            showMessage("Sign up Failed!");
-            return value;
-          }
-          showMessage("Successfully signed up! Please Log in.");
-          // redirect to login
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Login()));
-          return value;
-        });
-      } catch (e) {
-        SmartDialog.dismiss();
-        showMessage("Can not connect to the internet!");
-      }
-    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    SharedPreferences.getInstance().then((prefs) {
+      setState(() {
+        _oldPath = prefs.getString(PREF_HASHER_AVATAR);
+      });
+    });
   }
 
   @override
@@ -153,7 +126,7 @@ class _SignupAvatarState extends State<SignupAvatar> {
                     child: Center(
                         child: Avatar(
                       src: _avatarImage == null
-                          ? ''
+                          ? _oldPath ?? ''
                           : _avatarImage!.path.toString(),
                       size: 250,
                     ))),

@@ -9,10 +9,12 @@ import 'package:hasher/actions/hasherAction.dart';
 import 'package:hasher/components/dialogs.dart';
 import 'package:hasher/components/logo.dart';
 import 'package:hasher/config.dart';
+import 'package:hasher/constant.dart';
 import 'package:hasher/helper/helpers.dart';
 import 'package:hasher/screens/auth/forgetPassword.dart';
 import 'package:hasher/screens/auth/signUpPersonal.dart';
 import 'package:hasher/screens/home/home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class Login extends StatefulWidget {
@@ -69,7 +71,15 @@ class _LoginState extends State<Login> {
     }
   }
 
-  _initScreen() {}
+  _initScreen() {
+    SharedPreferences.getInstance().then((prefs) {
+      int id = prefs.getInt(PREF_HASHER_ID) ?? 0;
+      if (id > 0) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Home()));
+      }
+    });
+  }
 
   @override
   void initState() {

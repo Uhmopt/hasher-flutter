@@ -59,13 +59,11 @@ class _SignupPersonalState extends State<SignupPersonal> {
           SmartDialog.dismiss();
           if (value.status == "fail") {
             showMessage("Sign up Failed!");
-            return value;
           }
           if (value.status == "already") {
             showMessage('You may already have an account with us.\n' +
                 'A user with this email address already exists.\n' +
                 'Try resetting your password or check your email spelling.');
-            return value;
           }
           // set preference
           SharedPreferences.getInstance().then((prefs) {
@@ -76,14 +74,12 @@ class _SignupPersonalState extends State<SignupPersonal> {
             prefs.setString(PREF_HASHER_PHONE, _controllerPhone.text);
             prefs.setString(PREF_HASHER_BIRTH, _controllerBirth.text);
             prefs.setString(PREF_HASHER_FIRST_RUN, _controllerFirstrun.text);
+
+            // redirect to login
+            showMessage("Successfully signed up! \n Please Set New Password.");
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SignupPassword()));
           });
-
-          showMessage("Successfully signed up! \n Please Set New Password.");
-
-          // redirect to login
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => SignupPassword()));
-          return value;
         });
       } catch (e) {
         SmartDialog.dismiss();

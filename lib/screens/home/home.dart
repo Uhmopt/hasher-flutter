@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:hasher/actions/hashesAction.dart';
 import 'package:hasher/components/dialogs.dart';

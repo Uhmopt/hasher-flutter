@@ -29,14 +29,16 @@ Future<Result> loginAction(String email, String password) async {
       if (profiles.profiles!.length == 1) {
         return SharedPreferences.getInstance().then((prefs) {
           // set preference
-          prefs.clear();
           prefs.setInt(PREF_HASHER_ID, profiles.profiles![0].id);
+
+          prefs.setString(PREF_EMAIL, profiles.profiles![0].email);
+          prefs.setString(PREF_PASSWORD, password);
+
           prefs.setString(
               PREF_HASHER_FIRST_NAME, profiles.profiles![0].first_name);
           prefs.setString(
               PREF_HASHER_LAST_NAME, profiles.profiles![0].last_name);
           prefs.setString(PREF_HASHER_NAME, profiles.profiles![0].hash_name);
-          prefs.setString(PREF_EMAIL, profiles.profiles![0].email);
           prefs.setString(PREF_HASHER_PHONE, profiles.profiles![0].mobile);
           prefs.setString(
               PREF_HASHER_COUNTRY_CODE, profiles.profiles![0].country_code);

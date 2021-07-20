@@ -42,15 +42,15 @@ showAlertDialog({
   Widget leftButton = TextButton(
     child: Text(left),
     onPressed: () {
-      onLeft();
       Navigator.pop(context);
+      onLeft();
     },
   );
   Widget rightButton = TextButton(
     child: Text(right),
     onPressed: () {
-      onRight();
       Navigator.pop(context);
+      onRight();
     },
   );
   // set up the AlertDialog

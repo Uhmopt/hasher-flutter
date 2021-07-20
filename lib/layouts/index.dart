@@ -3,6 +3,7 @@ import 'package:hasher/components/avatar.dart';
 import 'package:hasher/config.dart';
 import 'package:hasher/constant.dart';
 import 'package:hasher/layouts/drawer.dart';
+import 'package:hasher/screens/auth/signUpAvatar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
@@ -38,8 +39,16 @@ class _HashLayoutState extends State<HashLayout> {
             title: Text(widget.title),
             actions: [
               Container(
-                  padding: const EdgeInsets.all(10),
-                  child: Avatar(src: _avatar, size: 35))
+                padding: const EdgeInsets.all(10),
+                child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignupAvatar()));
+                    },
+                    child: Avatar(src: _avatar, size: 35)),
+              )
             ]),
         body: widget.body,
         drawer: HashDrawer(),
