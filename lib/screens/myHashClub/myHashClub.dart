@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -7,9 +5,10 @@ import 'package:hasher/actions/hasherAction.dart';
 import 'package:hasher/actions/hashesAction.dart';
 import 'package:hasher/components/dialogs.dart';
 import 'package:hasher/constant.dart';
-import 'package:hasher/myHashClub/clubCard.dart';
+import 'package:hasher/screens/myHashClub/clubCard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// ignore: must_be_immutable
 class MyHashClub extends StatefulWidget {
   List<Hash>? hashes;
   MyHashClub({Key? key, this.hashes}) : super(key: key);

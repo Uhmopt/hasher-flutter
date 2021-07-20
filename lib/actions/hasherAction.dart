@@ -35,6 +35,7 @@ Future<Hasher> basicHasherInfo(String email) async {
 
 class Hasher {
   String status = 'fail';
+  int id = 0;
   String email = '';
   String hashname = '';
   String base64image = '';
@@ -43,6 +44,7 @@ class Hasher {
 
   Hasher({
     required this.status,
+    this.id = 0,
     this.email = '',
     this.hashname = '',
     this.base64image = '',
@@ -52,6 +54,7 @@ class Hasher {
   factory Hasher.fromJson(Map<String, dynamic> json) {
     return Hasher(
         status: json['status'] ?? 'fail',
+        id: int.parse(json['id'] ?? '0'),
         email: json['email'] ?? '',
         hashname: json['hashname'] ?? '',
         base64image: json['base64image'] ?? '',
@@ -62,6 +65,7 @@ class Hasher {
   Map<String, dynamic> toJson() {
     return {
       'status': this.status,
+      'id': this.id,
       'email': this.email,
       'hashname': this.hashname,
       'base64image': this.base64image,

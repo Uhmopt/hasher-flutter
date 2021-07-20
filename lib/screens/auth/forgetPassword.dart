@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -46,6 +45,7 @@ class ForgetPasswordState extends State<ForgetPassword> {
     return Container(
       child: Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             title: Text(page_title),
           ),
           body: Form(

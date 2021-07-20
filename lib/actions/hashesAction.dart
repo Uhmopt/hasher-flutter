@@ -38,8 +38,11 @@ class Hash {
   bool mother = false;
   bool committee = false;
   String country = '';
+  // ignore: non_constant_identifier_names
   int total_runs = 0;
+  // ignore: non_constant_identifier_names
   String first_runs = '';
+  // ignore: non_constant_identifier_names
   String run_area = '';
   String hashclubname = '';
   String rundate = '';
@@ -52,8 +55,11 @@ class Hash {
     this.mother = false,
     this.committee = false,
     this.country = '',
+    // ignore: non_constant_identifier_names
     this.total_runs = 0,
+    // ignore: non_constant_identifier_names
     this.first_runs = '',
+    // ignore: non_constant_identifier_names
     this.run_area = '',
     this.hashclubname = '',
     this.rundate = '',

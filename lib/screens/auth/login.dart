@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
@@ -10,12 +9,13 @@ import 'package:hasher/components/dialogs.dart';
 import 'package:hasher/components/logo.dart';
 import 'package:hasher/config.dart';
 import 'package:hasher/constant.dart';
-import 'package:hasher/forgetPassword.dart';
 import 'package:hasher/helper/helpers.dart';
-import 'package:hasher/home.dart';
-import 'package:hasher/signUp.dart';
+import 'package:hasher/screens/auth/forgetPassword.dart';
+import 'package:hasher/screens/auth/signUpPersonal.dart';
+import 'package:hasher/screens/home/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// ignore: must_be_immutable
 class Login extends StatefulWidget {
   Login({Key? key}) : super(key: key);
 
@@ -45,6 +45,7 @@ class _LoginState extends State<Login> {
                   if (hasher.status == 'success') {
                     // save preferences
                     // prefs.setString(PREF_HASHER, jsonEncode(hasher.toJson()));
+                    prefs.setInt(PREF_HASHER_ID, hasher.id);
                     prefs.setString(PREF_HASHER_NAME, hasher.hashname);
                     prefs.setString(PREF_HASHER_AVATAR, hasher.base64image);
                     prefs.setString(PREF_EMAIL, hasher.email);
@@ -83,10 +84,19 @@ class _LoginState extends State<Login> {
     }
   }
 
+  _initScreen() {}
+
+  @override
+  void initState() {
+    super.initState();
+    _initScreen();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           centerTitle: true,
           title: Text(appTitle),
         ),
@@ -171,8 +181,10 @@ class _LoginState extends State<Login> {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Signup()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SignupPersonal()));
                   },
                 ),
               )
