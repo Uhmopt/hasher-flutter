@@ -5,6 +5,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:hasher/actions/authAction.dart';
 import 'package:hasher/components/dialogs.dart';
 import 'package:hasher/helper/helpers.dart';
+import 'package:hasher/screens/auth/login.dart';
 
 const String page_title = 'Forget Password';
 
@@ -42,64 +43,76 @@ class ForgetPasswordState extends State<ForgetPassword> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            title: Text(page_title),
-          ),
-          body: Form(
-            key: _forgetPasswordForm,
-            child: ListView(
-              padding: const EdgeInsets.all(32),
-              children: [
-                Container(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: Center(
-                      child: Image.asset('images/logo.png',
-                          width: 150, height: 150, fit: BoxFit.cover),
-                    )),
-                Text(
-                  'Please enter your email address.',
-                  textScaleFactor: 1.4,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.indigoAccent),
-                ),
-                Container(
-                  padding: const EdgeInsets.only(top: 30, bottom: 50),
-                  child: TextFormField(
-                    controller: _controllerEmail,
-                    validator: (String? value) {
-                      if (value == null ||
-                          value.isEmpty ||
-                          !checkEmail(value)) {
-                        return 'Please enter valid email address';
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      labelText: "E-mail",
-                      prefixIcon: Icon(Icons.email),
-                      isDense: true,
-                    ),
-                  ),
-                ),
-                Container(
-                  child: ElevatedButton(
-                    child: Text(
-                      'Send',
+    return WillPopScope(
+        child: Container(
+          child: Scaffold(
+              appBar: AppBar(
+                automaticallyImplyLeading: false,
+                title: Text(page_title),
+              ),
+              body: Form(
+                key: _forgetPasswordForm,
+                child: ListView(
+                  padding: const EdgeInsets.all(32),
+                  children: [
+                    Container(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: Center(
+                          child: Image.asset('images/logo.png',
+                              width: 150, height: 150, fit: BoxFit.cover),
+                        )),
+                    Text(
+                      'Please enter your email address.',
                       textScaleFactor: 1.4,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.indigoAccent),
                     ),
-                    onPressed: _handleSubmit,
-                    style: ButtonStyle(
-                      padding: MaterialStateProperty.all(EdgeInsets.all(20)),
+                    Container(
+                      padding: const EdgeInsets.only(top: 30, bottom: 50),
+                      child: TextFormField(
+                        controller: _controllerEmail,
+                        validator: (String? value) {
+                          if (value == null ||
+                              value.isEmpty ||
+                              !checkEmail(value)) {
+                            return 'Please enter valid email address';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: "E-mail",
+                          prefixIcon: Icon(Icons.email),
+                          isDense: true,
+                        ),
+                      ),
                     ),
-                  ),
-                )
-              ],
-            ),
-          )),
-    );
+                    Container(
+                      child: ElevatedButton(
+                        child: Text(
+                          'Send',
+                          textScaleFactor: 1.4,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        onPressed: _handleSubmit,
+                        style: ButtonStyle(
+                          padding:
+                              MaterialStateProperty.all(EdgeInsets.all(20)),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              )),
+        ),
+        onWillPop: () async {
+          // redirect
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Login(),
+              ));
+          return false;
+        });
   }
 }

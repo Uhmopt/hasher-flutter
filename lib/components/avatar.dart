@@ -16,7 +16,9 @@ class _AvatarState extends State<Avatar> {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      child: (widget.src.length == 0)
+      child: (widget.src == 'Null' ||
+              widget.src.length == 0 ||
+              widget.src.runtimeType.toString() != 'String')
           ? Image.asset('images/profile.jpg',
               width: widget.size, height: widget.size, fit: BoxFit.cover)
           : widget.src.contains('http')

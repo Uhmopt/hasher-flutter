@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:hasher/actions/profileAction.dart';
 import 'package:hasher/config.dart';
+import 'package:hasher/constant.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<Result> loginAction(String email, String password) async {
   Map<String, String> headers = {
@@ -20,16 +23,42 @@ Future<Result> loginAction(String email, String password) async {
     body: data,
   );
 
-  log(response.body);
+  log('login: ' + response.body);
   if (response.statusCode == 200) {
-    try {
-      return new Result.fromJson(jsonDecode(response.body));
-    } catch (e) {
-      return new Result(status: 'fail');
-    }
+    return getProfiles(email).then((profiles) {
+      if (profiles.profiles!.length == 1) {
+        return SharedPreferences.getInstance().then((prefs) {
+          // set preference
+          prefs.clear();
+          prefs.setInt(PREF_HASHER_ID, profiles.profiles![0].id);
+          prefs.setString(
+              PREF_HASHER_FIRST_NAME, profiles.profiles![0].first_name);
+          prefs.setString(
+              PREF_HASHER_LAST_NAME, profiles.profiles![0].last_name);
+          prefs.setString(PREF_HASHER_NAME, profiles.profiles![0].hash_name);
+          prefs.setString(PREF_EMAIL, profiles.profiles![0].email);
+          prefs.setString(PREF_HASHER_PHONE, profiles.profiles![0].mobile);
+          prefs.setString(
+              PREF_HASHER_COUNTRY_CODE, profiles.profiles![0].country_code);
+          prefs.setString(PREF_HASHER_BIRTH, profiles.profiles![0].dob);
+          prefs.setString(
+              PREF_HASHER_FIRST_RUN, profiles.profiles![0].first_run);
+          prefs.setString(
+              PREF_HASHER_AVATAR, profiles.profiles![0].base64image);
+          prefs.setBool(PREF_HASHER_STATUS, profiles.profiles![0].status);
+
+          try {
+            return new Result.fromJson(jsonDecode(response.body));
+          } catch (e) {
+            return new Result(status: 'fail');
+          }
+        });
+      } else {
+        return new Result(status: 'fail');
+      }
+    });
   } else {
-    return new Result(status: 'fail');
-    // throw Exception('Failed to create Result.');
+    throw Exception('Failed Network.');
   }
 }
 

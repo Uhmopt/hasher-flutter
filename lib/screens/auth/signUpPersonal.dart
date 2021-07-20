@@ -94,188 +94,198 @@ class _SignupPersonalState extends State<SignupPersonal> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text(page_title),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.only(left: 10, right: 10),
-        children: [
-          Form(
-            key: _signUpPersonalForm,
-            child: Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.only(top: 25),
-                  child: TextFormField(
-                    controller: _controllerFirst,
-                    validator: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter First Name';
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      labelText: "First Name",
-                      prefixIcon: Icon(Icons.person),
-                      isDense: true,
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.only(top: 25),
-                  child: TextFormField(
-                    controller: _controllerLast,
-                    validator: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter Last Name';
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      labelText: "Last Name",
-                      prefixIcon: Icon(Icons.person_outline),
-                      isDense: true,
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.only(top: 25),
-                  child: TextFormField(
-                    controller: _controllerHash,
-                    validator: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter Hash Name';
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      labelText: "Hash Name",
-                      prefixIcon: Icon(Icons.person_pin),
-                      isDense: true,
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.only(top: 25),
-                  child: TextFormField(
-                    controller: _controllerEmail,
-                    validator: (String? value) {
-                      if (value == null ||
-                          value.isEmpty ||
-                          !checkEmail(value)) {
-                        return 'Please enter valid email address';
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      labelText: "E-mail",
-                      prefixIcon: Icon(Icons.email),
-                      isDense: true,
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.only(top: 25),
-                  child: TextFormField(
-                    controller: _controllerPhone,
-                    validator: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter Mobile Number';
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      labelText: "Mobile Number",
-                      prefixIcon: Icon(Icons.phone),
-                      isDense: true,
-                    ),
-                    keyboardType: TextInputType.number,
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.only(top: 25),
-                  child: TextFormField(
-                    onTap: () {
-                      // Below line stops keyboard from appearing
-                      FocusScope.of(context).requestFocus(new FocusNode());
-                      // Show Date Picker Here
-                      _selectDate(_controllerBirth);
-                    },
-                    controller: _controllerBirth,
-                    validator: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter Birthday';
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      labelText: "Birthday",
-                      prefixIcon: Icon(Icons.date_range),
-                      isDense: true,
-                    ),
-                    enableInteractiveSelection: false,
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.only(top: 25),
-                  child: TextFormField(
-                    onTap: () {
-                      // Below line stops keyboard from appearing
-                      FocusScope.of(context).requestFocus(new FocusNode());
-                      // Show Date Picker Here
-                      _selectDate(_controllerFirstrun);
-                    },
-                    controller: _controllerFirstrun,
-                    validator: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter First Run Date';
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      labelText: "First Run Date",
-                      prefixIcon: Icon(Icons.event),
-                      isDense: true,
-                    ),
-                    enableInteractiveSelection: false,
-                  ),
-                ),
-              ],
-            ),
+    return WillPopScope(
+        child: Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            title: Text(page_title),
           ),
-          Container(
-            padding: const EdgeInsets.only(top: 20),
-            width: double.infinity,
-            child: (ElevatedButton(
-              child: Text(
-                'Next',
-                textScaleFactor: 1.4,
-                style: TextStyle(fontWeight: FontWeight.bold),
+          body: ListView(
+            padding: const EdgeInsets.only(left: 10, right: 10),
+            children: [
+              Form(
+                key: _signUpPersonalForm,
+                child: Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(top: 25),
+                      child: TextFormField(
+                        controller: _controllerFirst,
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter First Name';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: "First Name",
+                          prefixIcon: Icon(Icons.person),
+                          isDense: true,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(top: 25),
+                      child: TextFormField(
+                        controller: _controllerLast,
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter Last Name';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: "Last Name",
+                          prefixIcon: Icon(Icons.person_outline),
+                          isDense: true,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(top: 25),
+                      child: TextFormField(
+                        controller: _controllerHash,
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter Hash Name';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: "Hash Name",
+                          prefixIcon: Icon(Icons.person_pin),
+                          isDense: true,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(top: 25),
+                      child: TextFormField(
+                        controller: _controllerEmail,
+                        validator: (String? value) {
+                          if (value == null ||
+                              value.isEmpty ||
+                              !checkEmail(value)) {
+                            return 'Please enter valid email address';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: "E-mail",
+                          prefixIcon: Icon(Icons.email),
+                          isDense: true,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(top: 25),
+                      child: TextFormField(
+                        controller: _controllerPhone,
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter Mobile Number';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: "Mobile Number",
+                          prefixIcon: Icon(Icons.phone),
+                          isDense: true,
+                        ),
+                        keyboardType: TextInputType.number,
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(top: 25),
+                      child: TextFormField(
+                        onTap: () {
+                          // Below line stops keyboard from appearing
+                          FocusScope.of(context).requestFocus(new FocusNode());
+                          // Show Date Picker Here
+                          _selectDate(_controllerBirth);
+                        },
+                        controller: _controllerBirth,
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter Birthday';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: "Birthday",
+                          prefixIcon: Icon(Icons.date_range),
+                          isDense: true,
+                        ),
+                        enableInteractiveSelection: false,
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(top: 25),
+                      child: TextFormField(
+                        onTap: () {
+                          // Below line stops keyboard from appearing
+                          FocusScope.of(context).requestFocus(new FocusNode());
+                          // Show Date Picker Here
+                          _selectDate(_controllerFirstrun);
+                        },
+                        controller: _controllerFirstrun,
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter First Run Date';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: "First Run Date",
+                          prefixIcon: Icon(Icons.event),
+                          isDense: true,
+                        ),
+                        enableInteractiveSelection: false,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              onPressed: _handleNext,
-              style: ButtonStyle(
-                padding: MaterialStateProperty.all(EdgeInsets.all(10)),
+              Container(
+                padding: const EdgeInsets.only(top: 20),
+                width: double.infinity,
+                child: (ElevatedButton(
+                  child: Text(
+                    'Next',
+                    textScaleFactor: 1.4,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  onPressed: _handleNext,
+                  style: ButtonStyle(
+                    padding: MaterialStateProperty.all(EdgeInsets.all(10)),
+                  ),
+                )),
               ),
-            )),
+              Container(
+                padding: const EdgeInsets.only(top: 20),
+                child: TextButton(
+                  child: Text(
+                    "Already have an account? Sign in",
+                    textScaleFactor: 1.2,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Login()));
+                  },
+                ),
+              )
+            ],
           ),
-          Container(
-            padding: const EdgeInsets.only(top: 20),
-            child: TextButton(
-              child: Text(
-                "Already have an account? Sign in",
-                textScaleFactor: 1.2,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              onPressed: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Login()));
-              },
-            ),
-          )
-        ],
-      ),
-    );
+        ),
+        onWillPop: () async {
+          // redirect
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Login(),
+              ));
+          return false;
+        });
   }
 }

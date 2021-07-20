@@ -87,81 +87,87 @@ class _SignupPasswordState extends State<SignupPassword> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Text(page_title),
-        ),
-        body: Center(
-          child: ListView(
-            shrinkWrap: true,
-            padding: const EdgeInsets.only(left: 10, right: 10),
-            children: [
-              Form(
-                key: _signUpPasswordForm,
-                child: Column(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.only(top: 25),
-                      child: TextFormField(
-                        controller: _controllerPassword,
-                        obscureText: true,
-                        validator: (String? value) {
-                          if (value == null || !checkPassword(value)) {
-                            return 'Password must contain at least one letter or number';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                            labelText: "Password",
-                            prefixIcon: Icon(Icons.lock),
-                            isDense: true,
-                            hintText:
-                                "Must be 8 characters and must contain letters and numbers."),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(top: 25),
-                      child: TextFormField(
-                        controller: _controllerPasswordConfirm,
-                        obscureText: true,
-                        validator: (String? value) {
-                          if (value == null ||
-                              value.isEmpty ||
-                              _controllerPassword.text != value) {
-                            return 'Confirm Password does not match';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          labelText: "Confirm Password",
-                          prefixIcon: Icon(Icons.lock_outline),
-                          isDense: true,
+    return WillPopScope(
+        child: Container(
+          child: Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              title: Text(page_title),
+            ),
+            body: Center(
+              child: ListView(
+                shrinkWrap: true,
+                padding: const EdgeInsets.only(left: 10, right: 10),
+                children: [
+                  Form(
+                    key: _signUpPasswordForm,
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.only(top: 25),
+                          child: TextFormField(
+                            controller: _controllerPassword,
+                            obscureText: true,
+                            validator: (String? value) {
+                              if (value == null || !checkPassword(value)) {
+                                return 'Password must contain at least one letter or number';
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                                labelText: "Password",
+                                prefixIcon: Icon(Icons.lock),
+                                isDense: true,
+                                hintText:
+                                    "Must be 8 characters and must contain letters and numbers."),
+                          ),
                         ),
+                        Container(
+                          padding: const EdgeInsets.only(top: 25),
+                          child: TextFormField(
+                            controller: _controllerPasswordConfirm,
+                            obscureText: true,
+                            validator: (String? value) {
+                              if (value == null ||
+                                  value.isEmpty ||
+                                  _controllerPassword.text != value) {
+                                return 'Confirm Password does not match';
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              labelText: "Confirm Password",
+                              prefixIcon: Icon(Icons.lock_outline),
+                              isDense: true,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: ElevatedButton(
+                      child: Text(
+                        'Next',
+                        textScaleFactor: 1.4,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      onPressed: _handleNext,
+                      style: ButtonStyle(
+                        padding: MaterialStateProperty.all(EdgeInsets.all(10)),
                       ),
                     ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.only(top: 20),
-                child: ElevatedButton(
-                  child: Text(
-                    'Next',
-                    textScaleFactor: 1.4,
-                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  onPressed: _handleNext,
-                  style: ButtonStyle(
-                    padding: MaterialStateProperty.all(EdgeInsets.all(10)),
-                  ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
-      ),
-    );
+        onWillPop: () async {
+          // redirect
+          showMessage('Please select the passowrd!');
+          return false;
+        });
   }
 }

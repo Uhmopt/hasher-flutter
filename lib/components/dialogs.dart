@@ -35,17 +35,23 @@ showAlertDialog({
   String description = '',
   String left = '',
   String right = '',
-  void Function() onLeft = DEFAULT_FUNCTION,
-  void Function() onRight = DEFAULT_FUNCTION,
+  dynamic Function() onLeft = DEFAULT_FUNCTION,
+  dynamic Function() onRight = DEFAULT_FUNCTION,
 }) {
   // set up the buttons
   Widget leftButton = TextButton(
     child: Text(left),
-    onPressed: onLeft,
+    onPressed: () {
+      onLeft();
+      Navigator.pop(context);
+    },
   );
   Widget rightButton = TextButton(
     child: Text(right),
-    onPressed: onRight,
+    onPressed: () {
+      onRight();
+      Navigator.pop(context);
+    },
   );
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(

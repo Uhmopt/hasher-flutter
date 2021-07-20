@@ -138,86 +138,99 @@ class _SignupAvatarState extends State<SignupAvatar> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Text(page_title),
-        ),
-        body: ListView(
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          children: [
-            Container(
-                padding: const EdgeInsets.symmetric(vertical: 25),
-                child: Center(
-                    child: Avatar(
-                  src:
-                      _avatarImage == null ? '' : _avatarImage!.path.toString(),
-                  size: 250,
-                ))),
-            TextButton(
-                onPressed: _handleTakeCameraPhoto,
-                child:
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Container(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: Icon(
-                        Icons.add_a_photo,
-                        size: 40,
-                      )),
-                  Text(
-                    'Photo to Camera',
-                    textScaleFactor: 1.3,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  )
-                ])),
-            TextButton(
-                onPressed: _handleTakeGalleryPhoto,
-                child:
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Container(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: Icon(
-                        Icons.add_photo_alternate,
-                        size: 40,
-                      )),
-                  Text(
-                    'Photo to Storage',
-                    textScaleFactor: 1.3,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  )
-                ])),
-            Container(
-              padding: const EdgeInsets.only(top: 20),
-              child: ElevatedButton(
-                child: Text(
-                  'Upload',
-                  textScaleFactor: 1.4,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                onPressed: _handleUpload,
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all(EdgeInsets.all(10)),
-                ),
-              ),
+    return WillPopScope(
+        child: Container(
+          child: Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              title: Text(page_title),
             ),
-            Container(
-              padding: const EdgeInsets.only(top: 20),
-              child: TextButton(
-                child: Text(
-                  "Upload photo later",
-                  textScaleFactor: 1.2,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+            body: ListView(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              children: [
+                Container(
+                    padding: const EdgeInsets.symmetric(vertical: 25),
+                    child: Center(
+                        child: Avatar(
+                      src: _avatarImage == null
+                          ? ''
+                          : _avatarImage!.path.toString(),
+                      size: 250,
+                    ))),
+                TextButton(
+                    onPressed: _handleTakeCameraPhoto,
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: Icon(
+                                Icons.add_a_photo,
+                                size: 40,
+                              )),
+                          Text(
+                            'Photo to Camera',
+                            textScaleFactor: 1.3,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )
+                        ])),
+                TextButton(
+                    onPressed: _handleTakeGalleryPhoto,
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: Icon(
+                                Icons.add_photo_alternate,
+                                size: 40,
+                              )),
+                          Text(
+                            'Photo to Storage',
+                            textScaleFactor: 1.3,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )
+                        ])),
+                Container(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: ElevatedButton(
+                    child: Text(
+                      'Upload',
+                      textScaleFactor: 1.4,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: _handleUpload,
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all(EdgeInsets.all(10)),
+                    ),
+                  ),
                 ),
-                onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Home()));
-                },
-              ),
-            )
-          ],
+                Container(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: TextButton(
+                    child: Text(
+                      "Upload photo later",
+                      textScaleFactor: 1.2,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Home()));
+                    },
+                  ),
+                )
+              ],
+            ),
+          ),
         ),
-      ),
-    );
+        onWillPop: () async {
+          // redirect
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Login(),
+              ));
+          return false;
+        });
   }
 }
