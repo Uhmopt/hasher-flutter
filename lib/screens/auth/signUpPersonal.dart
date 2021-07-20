@@ -59,11 +59,13 @@ class _SignupPersonalState extends State<SignupPersonal> {
           SmartDialog.dismiss();
           if (value.status == "fail") {
             showMessage("Sign up Failed!");
+            return;
           }
           if (value.status == "already") {
             showMessage('You may already have an account with us.\n' +
                 'A user with this email address already exists.\n' +
                 'Try resetting your password or check your email spelling.');
+            return;
           }
           // set preference
           SharedPreferences.getInstance().then((prefs) {
