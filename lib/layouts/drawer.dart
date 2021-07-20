@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hasher/components/avatar.dart';
 import 'package:hasher/constant.dart';
 import 'package:hasher/layouts/menuButton.dart';
+import 'package:hasher/screens/auth/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HashDrawer extends StatefulWidget {
@@ -69,6 +70,20 @@ class _HashDrawerState extends State<HashDrawer> {
             title: 'Hare Line',
             icon: Icons.add_box,
             onPressed: () {},
+          ),
+          MenuButton(
+            title: 'Change email',
+            icon: Icons.cached,
+            onPressed: () {
+              SharedPreferences.getInstance().then((prefs) {
+                prefs.clear();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Login(),
+                    ));
+              });
+            },
           ),
         ],
       ),
