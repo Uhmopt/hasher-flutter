@@ -5,6 +5,7 @@ import 'package:hasher/constant.dart';
 import 'package:hasher/layouts/menuButton.dart';
 import 'package:hasher/screens/auth/login.dart';
 import 'package:hasher/screens/auth/myProfile.dart';
+import 'package:hasher/screens/auth/signUpAvatar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HashDrawer extends StatefulWidget {
@@ -33,14 +34,20 @@ class _HashDrawerState extends State<HashDrawer> {
     return Drawer(
       child: ListView(
         children: [
-          Container(
-            padding: const EdgeInsets.only(top: 20, bottom: 20),
-            child: Center(
-              child: Avatar(
-                src: _avatarPath,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SignupAvatar()));
+            },
+            child: Container(
+              padding: const EdgeInsets.only(top: 20, bottom: 20),
+              child: Center(
+                child: Avatar(
+                  src: _avatarPath,
+                ),
               ),
+              color: Colors.indigoAccent,
             ),
-            color: Colors.indigoAccent,
           ),
           MenuButton(
             title: 'My Profile',

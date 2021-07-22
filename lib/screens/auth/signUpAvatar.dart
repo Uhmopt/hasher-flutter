@@ -13,7 +13,7 @@ import 'package:hasher/screens/home/home.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-const String page_title = 'Sign Up';
+const String page_title = 'Upload your photo';
 
 class SignupAvatar extends StatefulWidget {
   SignupAvatar({Key? key}) : super(key: key);
