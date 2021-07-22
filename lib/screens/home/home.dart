@@ -1,10 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hasher/actions/hashesAction.dart';
 import 'package:hasher/components/dialogs.dart';
 import 'package:hasher/layouts/index.dart';
-import 'package:hasher/screens/auth/login.dart';
 import 'package:hasher/screens/auth/signUpAvatar.dart';
 import 'package:hasher/screens/myHashClub/myHashClub.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -55,16 +53,18 @@ class _HomeState extends State<Home> {
           return showConfirmDialog(
             context: context,
             title: 'Are you sure?',
-            description: 'Are you sure to log out from this app.',
+            // description: 'Are you sure to log out from this app.',
+            description: 'Are you sure to close this app.',
             left: 'Yes',
             onLeft: () {
               SharedPreferences.getInstance().then((prefs) {
-                prefs.clear();
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Login(),
-                    ));
+                // prefs.clear();
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //       builder: (context) => Login(),
+                //     ));
+                SystemNavigator.pop();
                 return false;
               });
             },

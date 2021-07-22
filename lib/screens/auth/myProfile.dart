@@ -163,6 +163,7 @@ class _MyProfileState extends State<MyProfile> {
                       Container(
                         padding: const EdgeInsets.only(top: 25),
                         child: TextFormField(
+                          readOnly: true,
                           controller: _controllerEmail,
                           validator: (String? value) {
                             if (value == null ||
@@ -182,7 +183,6 @@ class _MyProfileState extends State<MyProfile> {
                       Container(
                         padding: const EdgeInsets.only(top: 25),
                         child: TextFormField(
-                          readOnly: true,
                           controller: _controllerPhone,
                           validator: (String? value) {
                             if (value == null || value.isEmpty) {
