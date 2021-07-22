@@ -66,7 +66,7 @@ class _SignupAvatarState extends State<SignupAvatar> {
       String email = prefs.getString(PREF_EMAIL) ?? '';
       String password = prefs.getString(PREF_PASSWORD) ?? '';
       if (id > 0) {
-        updateProfile(
+        updateProfileAction(
           id: id,
           first: prefs.getString(PREF_HASHER_FIRST_NAME),
           last: prefs.getString(PREF_HASHER_LAST_NAME),

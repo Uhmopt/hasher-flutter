@@ -30,7 +30,7 @@ class _SignupPasswordState extends State<SignupPassword> {
     if (_signUpPasswordForm.currentState!.validate()) {
       showLoading();
       try {
-        updatePassword(
+        updatePasswordAction(
                 email: _email,
                 oldpass: DEFAULT_PASSWORD,
                 password: _controllerPassword.text)

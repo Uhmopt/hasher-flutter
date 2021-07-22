@@ -4,6 +4,7 @@ import 'package:hasher/components/avatar.dart';
 import 'package:hasher/constant.dart';
 import 'package:hasher/layouts/menuButton.dart';
 import 'package:hasher/screens/auth/login.dart';
+import 'package:hasher/screens/auth/myProfile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HashDrawer extends StatefulWidget {
@@ -44,7 +45,13 @@ class _HashDrawerState extends State<HashDrawer> {
           MenuButton(
             title: 'My Profile',
             icon: Icons.group,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MyProfile(),
+                  ));
+            },
           ),
           MenuButton(
             title: 'Reset Password',

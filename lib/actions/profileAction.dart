@@ -33,7 +33,7 @@ Future<Profiles> getProfiles(String email) async {
   }
 }
 
-Future<Result> updateProfile({
+Future<Result> updateProfileAction({
   int? id,
   String? first,
   String? last,
@@ -66,7 +66,7 @@ Future<Result> updateProfile({
     body: data,
   );
 
-  log('updateProfile: ' + response.body);
+  log('updateProfileAction: ' + response.body);
   if (response.statusCode == 200) {
     try {
       return Result.fromJson(jsonDecode(response.body));
@@ -79,7 +79,7 @@ Future<Result> updateProfile({
   }
 }
 
-Future<Result> updatePassword({
+Future<Result> updatePasswordAction({
   String? email,
   String? password,
   String? oldpass,
@@ -100,7 +100,7 @@ Future<Result> updatePassword({
     body: data,
   );
 
-  log('updateProfile: ' + response.body);
+  log('updatePasswordAction: ' + response.body);
   if (response.statusCode == 200) {
     try {
       return Result.fromJson(jsonDecode(response.body));
