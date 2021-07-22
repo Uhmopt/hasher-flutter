@@ -43,7 +43,7 @@ class ForgetPasswordState extends State<ForgetPassword> {
             });
             showAlertDialog(
                 context: context,
-                title: '',
+                title: 'Information',
                 description: 'WE HAVE SENT YOU AN EMAIL with NEW PASSWORD',
                 onOk: () {
                   Navigator.push(
