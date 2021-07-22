@@ -33,6 +33,38 @@ showAlertDialog({
   required BuildContext context,
   String title = '',
   String description = '',
+  String buttonText = 'OK',
+  dynamic Function() onOk = DEFAULT_FUNCTION,
+}) {
+  // set up the buttons
+  Widget okButton = TextButton(
+    child: Text(buttonText),
+    onPressed: () {
+      Navigator.pop(context);
+      onOk();
+    },
+  );
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text(title),
+    content: Text(description),
+    actions: [
+      okButton,
+    ],
+  );
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
+showConfirmDialog({
+  required BuildContext context,
+  String title = '',
+  String description = '',
   String left = '',
   String right = '',
   dynamic Function() onLeft = DEFAULT_FUNCTION,

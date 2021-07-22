@@ -41,9 +41,20 @@ class ForgetPasswordState extends State<ForgetPassword> {
             setState(() {
               _isReset = true;
             });
+            showAlertDialog(
+                context: context,
+                title: '',
+                description: 'WE HAVE SENT YOU AN EMAIL with NEW PASSWORD',
+                onOk: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Login(),
+                      ));
+                });
             return value;
           }
-          showMessage("Please enter a valid email!");
+          showMessage("This email does not exist in our database!");
           return value;
         });
       } catch (e) {

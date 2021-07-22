@@ -23,7 +23,7 @@ class _HomeState extends State<Home> {
   _initScreen() {
     if (widget.isFirst) {
       WidgetsBinding.instance!.addPostFrameCallback(
-        (_) => showAlertDialog(
+        (_) => showConfirmDialog(
             context: context,
             title: "Alert",
             description: "Would you like to upload your photo?",
@@ -52,7 +52,7 @@ class _HomeState extends State<Home> {
             title: 'My Hash Clubs', body: MyHashClub(hashes: widget.hashes)),
         onWillPop: () async {
           // redirect
-          return showAlertDialog(
+          return showConfirmDialog(
             context: context,
             title: 'Are you sure?',
             description: 'Are you sure to log out from this app.',

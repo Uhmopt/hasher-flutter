@@ -191,7 +191,7 @@ class _LoginState extends State<Login> {
             )),
         onWillPop: () async {
           // redirect
-          showAlertDialog(
+          showConfirmDialog(
             context: context,
             title: 'Are you sure?',
             description: 'Are you sure to close this app.',
