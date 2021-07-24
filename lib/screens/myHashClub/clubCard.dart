@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
@@ -5,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:hasher/actions/hashesAction.dart';
 import 'package:hasher/components/blueLabelText.dart';
 import 'package:hasher/components/checkBox.dart';
+import 'package:hasher/components/dialogs.dart';
+import 'package:hasher/screens/myHashClub/editClub.dart';
 
 // ignore: must_be_immutable
 class ClubCard extends StatefulWidget {
@@ -16,6 +19,18 @@ class ClubCard extends StatefulWidget {
 }
 
 class _ClubCardState extends State<ClubCard> {
+  _handleEdit() {
+    int id = widget.hash!.clubid;
+    if (id > 0) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => EditClub(hash: widget.hash ?? new Hash())));
+    } else {
+      showMessage('This club does not exist.\nLog out and try again.');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -61,10 +76,13 @@ class _ClubCardState extends State<ClubCard> {
                       ),
                       Container(
                         padding: const EdgeInsets.only(left: 20),
-                        child: Icon(
-                          Icons.edit,
-                          color: Colors.pinkAccent,
-                          size: 30,
+                        child: IconButton(
+                          onPressed: _handleEdit,
+                          icon: Icon(
+                            Icons.edit,
+                            color: Colors.pinkAccent,
+                            size: 30,
+                          ),
                         ),
                       )
                     ],
@@ -102,7 +120,7 @@ class _ClubCardState extends State<ClubCard> {
                       flex: 4,
                       child: CheckBoxLabel(
                         label: 'Follow Hash',
-                        value: widget.hash!.last,
+                        value: widget.hash!.follow,
                         onChanged: (v) {},
                       ))
                 ],

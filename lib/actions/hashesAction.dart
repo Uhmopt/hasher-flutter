@@ -37,6 +37,7 @@ class Hash {
   bool last = false;
   bool mother = false;
   bool committee = false;
+  bool follow = false;
   String country = '';
   // ignore: non_constant_identifier_names
   int total_runs = 0;
@@ -54,6 +55,7 @@ class Hash {
     this.last = false,
     this.mother = false,
     this.committee = false,
+    this.follow = false,
     this.country = '',
     // ignore: non_constant_identifier_names
     this.total_runs = 0,
@@ -73,6 +75,7 @@ class Hash {
       last: int.parse(json['last'] ?? '0') == 1,
       mother: int.parse(json['mother'] ?? '0') == 1,
       committee: int.parse(json['committee'] ?? '0') == 1,
+      follow: int.parse(json['follow'] ?? '0') == 1,
       country: (json['country'] ?? '').toString(),
       total_runs: int.parse(json['total_runs'] ?? '0'),
       first_runs: (json['first_runs'] ?? '').toString(),

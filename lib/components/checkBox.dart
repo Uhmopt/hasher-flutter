@@ -6,8 +6,13 @@ class CheckBoxLabel extends StatefulWidget {
   bool value = false;
   void Function(bool?)? onChanged = (value) {};
   String label = '';
+  double textScaleFactor = 1.2;
   CheckBoxLabel(
-      {Key? key, this.value = false, required this.onChanged, this.label = ''})
+      {Key? key,
+      this.value = false,
+      required this.onChanged,
+      this.label = '',
+      this.textScaleFactor = 1.2})
       : super(key: key);
 
   @override
@@ -25,7 +30,16 @@ class _CheckBoxLabelState extends State<CheckBoxLabel> {
             value: widget.value,
             activeColor: Colors.pinkAccent,
           ),
-          Text(widget.label)
+          GestureDetector(
+            onTap: () {
+              Function t = widget.onChanged ?? () {};
+              t(!widget.value);
+            },
+            child: Text(
+              widget.label,
+              textScaleFactor: widget.textScaleFactor,
+            ),
+          )
         ],
       ),
     );
