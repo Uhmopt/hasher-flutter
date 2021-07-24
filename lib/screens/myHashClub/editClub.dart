@@ -100,7 +100,7 @@ class _EditClubState extends State<EditClub> {
                               return null;
                             },
                             decoration: InputDecoration(
-                                labelText: "Total Runds",
+                                labelText: "Total Runs",
                                 prefixIcon: Icon(Icons.format_list_numbered),
                                 isDense: true,
                                 hintText: "Please input total Runs"),

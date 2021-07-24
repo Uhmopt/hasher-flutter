@@ -6,6 +6,7 @@ import 'package:hasher/actions/hashesAction.dart';
 import 'package:hasher/components/dialogs.dart';
 import 'package:hasher/constant.dart';
 import 'package:hasher/screens/myHashClub/clubCard.dart';
+import 'package:hasher/screens/myHashClub/selectClub.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
@@ -87,6 +88,26 @@ class _MyHashClubState extends State<MyHashClub> {
                     hash: item,
                   );
                 }).toList()),
+          Container(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SelectClub(),
+                    ));
+              },
+              child: Text(
+                'Follow More Clubs',
+                textScaleFactor: 1.4,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              style: ButtonStyle(
+                padding: MaterialStateProperty.all(EdgeInsets.all(10)),
+              ),
+            ),
+            padding: const EdgeInsets.all(20),
+          )
         ],
       ),
     );
