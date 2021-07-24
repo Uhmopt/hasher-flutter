@@ -13,6 +13,7 @@ import 'package:hasher/constant.dart';
 import 'package:hasher/helper/helpers.dart';
 import 'package:hasher/layouts/index.dart';
 import 'package:hasher/screens/home/home.dart';
+import 'package:hasher/screens/myHashClub/createClub.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SelectClub extends StatefulWidget {
@@ -147,7 +148,13 @@ class _SelectClubState extends State<SelectClub> {
         ),
         Container(
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CreateClub(),
+                  ));
+            },
             child: Text(
               "If you club is not listed, Click here.",
               textScaleFactor: 1.3,

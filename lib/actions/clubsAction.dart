@@ -70,3 +70,42 @@ Future<Result> selectClub(
     // throw Exception('Failed to create Countries.');
   }
 }
+
+Future<Result> createClub(
+    {String country = '',
+    String runarea = '',
+    String clubname = '',
+    String firstrun = '',
+    String currunnum = '',
+    String rundate = ''}) async {
+  Map<String, String> headers = {
+    "content-type": "application/x-www-form-urlencoded; charset=utf-8"
+  };
+
+  var data = new Map<String, String>();
+  data['country'] = country;
+  data['runarea'] = runarea;
+  data['clubname'] = clubname;
+  data['firstrun'] = firstrun;
+  data['currunnum'] = currunnum;
+  data['rundate'] = rundate;
+
+  final response = await http.post(
+    Uri.parse(apiBase + '/createhashclub_mo.php'),
+    headers: headers,
+    encoding: Encoding.getByName("utf-8"),
+    body: data,
+  );
+
+  log('createClub: ' + response.body);
+  if (response.statusCode == 200) {
+    try {
+      return new Result.fromJson(jsonDecode(response.body));
+    } catch (e) {
+      return new Result(status: 'fail');
+    }
+  } else {
+    return new Result(status: 'fail');
+    // throw Exception('Failed to create Countries.');
+  }
+}
