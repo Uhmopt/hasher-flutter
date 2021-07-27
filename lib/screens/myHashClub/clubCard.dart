@@ -8,6 +8,7 @@ import 'package:hasher/components/blueLabelText.dart';
 import 'package:hasher/components/checkBox.dart';
 import 'package:hasher/components/dialogs.dart';
 import 'package:hasher/screens/myHashClub/editClub.dart';
+import 'package:hasher/screens/myHashClub/runDetails.dart';
 
 // ignore: must_be_immutable
 class ClubCard extends StatefulWidget {
@@ -124,6 +125,29 @@ class _ClubCardState extends State<ClubCard> {
                         onChanged: (v) {},
                       ))
                 ],
+              ),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(15),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RunDetails(hash: widget.hash),
+                        ));
+                  },
+                  child: Text(
+                    'Next Run',
+                    textScaleFactor: 1.3,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.pinkAccent),
+                      padding:
+                          MaterialStateProperty.all(const EdgeInsets.all(15))),
+                ),
               )
             ],
           ),
