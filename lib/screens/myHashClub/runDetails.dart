@@ -78,7 +78,7 @@ class _RunDetailsState extends State<RunDetails> {
                 child: Card(
                   child: Container(
                     padding: const EdgeInsets.all(10),
-                    child: (_runDetail?.status == 'success')
+                    child: (_runDetail?.rundate != '')
                         ? Column(
                             children: [
                               BlueLabelText(
