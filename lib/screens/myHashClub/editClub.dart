@@ -65,99 +65,98 @@ class _EditClubState extends State<EditClub> {
   Widget build(BuildContext context) {
     return HashLayout(
       title: 'Edit Club Info',
-      body: Container(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            child: Text(
-              widget.hash.hashclubname,
-              textScaleFactor: 2,
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-            ),
-            padding: const EdgeInsets.all(10),
-            alignment: Alignment.center,
-            color: Colors.pinkAccent,
-            width: double.infinity,
-          ),
-          ListView(
-              shrinkWrap: true,
-              padding: const EdgeInsets.all(20),
-              children: [
-                Form(
-                    key: _editClubForm,
-                    child: Column(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.only(top: 25),
-                          child: TextFormField(
-                            controller: _textRuns,
-                            validator: (String? value) {
-                              if (value == null || !checkNumber(value)) {
-                                return 'Please inset correct number';
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                                labelText: "Total Runs",
-                                prefixIcon: Icon(Icons.format_list_numbered),
-                                isDense: true,
-                                hintText: "Please input total Runs"),
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly
-                            ], // Only numbers can be entered
-                          ),
+      body: Form(
+        key: _editClubForm,
+        child: Container(
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              Container(
+                child: Text(
+                  widget.hash.hashclubname,
+                  textScaleFactor: 2,
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+                padding: const EdgeInsets.all(10),
+                alignment: Alignment.center,
+                color: Colors.pinkAccent,
+                width: double.infinity,
+              ),
+              Container(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(top: 25),
+                        child: TextFormField(
+                          controller: _textRuns,
+                          validator: (String? value) {
+                            if (value == null || !checkNumber(value)) {
+                              return 'Please inset correct number';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                              labelText: "Total Runs",
+                              prefixIcon: Icon(Icons.format_list_numbered),
+                              isDense: true,
+                              hintText: "Please input total Runs"),
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly
+                          ], // Only numbers can be entered
                         ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(vertical: 5),
-                          child: CheckBoxLabel(
-                            value: _isCurrent,
-                            onChanged: (value) {
-                              setState(() {
-                                _isCurrent = value ?? false;
-                              });
-                            },
-                            label: 'Current Hash',
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: CheckBoxLabel(
+                          value: _isCurrent,
+                          onChanged: (value) {
+                            setState(() {
+                              _isCurrent = value ?? false;
+                            });
+                          },
+                          label: 'Current Hash',
+                          textScaleFactor: 1.4,
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: CheckBoxLabel(
+                          value: _isFollow,
+                          onChanged: (value) {
+                            setState(() {
+                              _isFollow = value ?? false;
+                            });
+                          },
+                          label: 'Follow Hash',
+                          textScaleFactor: 1.4,
+                        ),
+                      ),
+                      Container(
+                        child: ElevatedButton(
+                          onPressed: _handleUpdate,
+                          child: Text(
+                            'Updated Club Info',
                             textScaleFactor: 1.4,
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(vertical: 5),
-                          child: CheckBoxLabel(
-                            value: _isFollow,
-                            onChanged: (value) {
-                              setState(() {
-                                _isFollow = value ?? false;
-                              });
-                            },
-                            label: 'Follow Hash',
-                            textScaleFactor: 1.4,
-                          ),
-                        ),
-                        Container(
-                          child: ElevatedButton(
-                            onPressed: _handleUpdate,
-                            child: Text(
-                              'Updated Club Info',
-                              textScaleFactor: 1.4,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
                             ),
-                            style: ButtonStyle(
-                                padding: MaterialStateProperty.all(
-                                    EdgeInsets.all(20))),
                           ),
-                          width: double.infinity,
-                          padding: const EdgeInsets.only(top: 40),
-                        )
-                      ],
-                    ))
-              ])
-        ],
-      )),
+                          style: ButtonStyle(
+                              padding: MaterialStateProperty.all(
+                                  EdgeInsets.all(20))),
+                        ),
+                        width: double.infinity,
+                        padding: const EdgeInsets.only(top: 40),
+                      )
+                    ],
+                  ))
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

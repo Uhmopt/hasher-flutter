@@ -6,7 +6,7 @@ import 'package:hasher/actions/hashesAction.dart';
 import 'package:hasher/components/dialogs.dart';
 import 'package:hasher/constant.dart';
 import 'package:hasher/screens/myHashClub/clubCard.dart';
-import 'package:hasher/screens/myHashClub/selectClub.dart';
+import 'package:hasher/screens/myHashClub/selectClubPart1.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
@@ -94,7 +94,7 @@ class _MyHashClubState extends State<MyHashClub> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => SelectClub(),
+                      builder: (context) => SelectClubPart1(),
                     ));
               },
               child: Text(

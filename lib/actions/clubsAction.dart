@@ -34,7 +34,7 @@ Future<List<String>> getClubNames(String country) async {
   }
 }
 
-Future<Result> selectClub(
+Future<Result> selectClubAction(
     {String country = '',
     String curhashclub = '',
     String curtotalrun = '',
@@ -58,7 +58,7 @@ Future<Result> selectClub(
     body: data,
   );
 
-  log('selectClub: ' + response.body);
+  log('selectClubAction: ' + response.body);
   if (response.statusCode == 200) {
     try {
       return new Result.fromJson(jsonDecode(response.body));
