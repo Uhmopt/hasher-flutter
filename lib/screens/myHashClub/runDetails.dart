@@ -82,6 +82,10 @@ class _RunDetailsState extends State<RunDetails> {
                         ? Column(
                             children: [
                               BlueLabelText(
+                                label: "Hare",
+                                value: _runDetail?.hare ?? '',
+                              ),
+                              BlueLabelText(
                                 label: "Run Date",
                                 value: _runDetail?.rundate ?? '',
                               ),
@@ -100,7 +104,7 @@ class _RunDetailsState extends State<RunDetails> {
                               BlueLabelText(
                                 label: "direction",
                                 value: _runDetail?.direction ?? '',
-                              )
+                              ),
                             ],
                           )
                         : Center(
