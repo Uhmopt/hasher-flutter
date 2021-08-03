@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hasher/actions/hashesAction.dart';
 import 'package:hasher/actions/runListAction.dart';
 import 'package:hasher/components/labelText.dart';
+import 'package:hasher/screens/myHashClub/runDetails.dart';
 
 // ignore: must_be_immutable
 class HashRunListCard extends StatefulWidget {
@@ -54,7 +56,24 @@ class _HashRunListCardState extends State<HashRunListCard> {
                     textScaleFactor: 1.2,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RunDetails(
+                            hash: new Hash(
+                              hashclubname: widget.clubname,
+                              rundate: (widget.run?.run_date ?? '') +
+                                  ' ' +
+                                  (widget.run?.run_time ?? ''),
+                              total_runs:
+                                  int.tryParse(widget.run?.run_number ?? '') ??
+                                      0,
+                            ),
+                            hashRunId: widget.run?.hashrunid ?? 'next',
+                          ),
+                        ));
+                  },
                   style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all(Colors.pinkAccent)),

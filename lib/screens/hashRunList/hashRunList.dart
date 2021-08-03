@@ -9,6 +9,7 @@ import 'package:hasher/components/dialogs.dart';
 import 'package:hasher/constant.dart';
 import 'package:hasher/screens/hashRunList/hashRunListCard.dart';
 import 'package:hasher/screens/home/home.dart';
+import 'package:hasher/screens/myHashClub/selectClubPart1.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HashRunList extends StatefulWidget {
@@ -170,7 +171,13 @@ class _HashRunListState extends State<HashRunList> {
             Container(
               padding: const EdgeInsets.all(20),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SelectClubPart1(),
+                      ));
+                },
                 child: Container(
                   padding: const EdgeInsets.all(15),
                   child: Text(

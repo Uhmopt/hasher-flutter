@@ -13,8 +13,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class RunDetails extends StatefulWidget {
-  RunDetails({Key? key, this.hash}) : super(key: key);
+  RunDetails({Key? key, this.hash, this.hashRunId = 'next'}) : super(key: key);
   Hash? hash = new Hash();
+  String hashRunId = 'next';
 
   @override
   _RunDetailsState createState() => _RunDetailsState();
@@ -33,9 +34,8 @@ class _RunDetailsState extends State<RunDetails> {
       getRunDetail(
               club: widget.hash?.hashclubname ?? '',
               email: email,
-              hashrunid: 'next')
+              hashrunid: widget.hashRunId)
           .then((value) {
-        log(value.status);
         setState(() {
           _runDetail = value;
         });
@@ -81,30 +81,42 @@ class _RunDetailsState extends State<RunDetails> {
                     child: (_runDetail?.rundate != '')
                         ? Column(
                             children: [
-                              LabelText(
-                                label: "Hare",
-                                value: _runDetail?.hare ?? '',
-                              ),
-                              LabelText(
-                                label: "Run Date",
-                                value: _runDetail?.rundate ?? '',
-                              ),
-                              LabelText(
-                                label: "Run Time",
-                                value: _runDetail?.runtime ?? '',
-                              ),
-                              LabelText(
-                                label: "Run Number",
-                                value: _runDetail?.runnum ?? '',
-                              ),
-                              LabelText(
-                                label: "location",
-                                value: _runDetail?.location ?? '',
-                              ),
-                              LabelText(
-                                label: "direction",
-                                value: _runDetail?.direction ?? '',
-                              ),
+                              _runDetail?.hare.isEmpty ?? false
+                                  ? Container()
+                                  : LabelText(
+                                      label: "Hare",
+                                      value: _runDetail?.hare ?? '',
+                                    ),
+                              _runDetail?.rundate.isEmpty ?? false
+                                  ? Container()
+                                  : LabelText(
+                                      label: "Run Date",
+                                      value: _runDetail?.rundate ?? '',
+                                    ),
+                              _runDetail?.runtime.isEmpty ?? false
+                                  ? Container()
+                                  : LabelText(
+                                      label: "Run Time",
+                                      value: _runDetail?.runtime ?? '',
+                                    ),
+                              _runDetail?.runnum.isEmpty ?? false
+                                  ? Container()
+                                  : LabelText(
+                                      label: "Run Number",
+                                      value: _runDetail?.runnum ?? '',
+                                    ),
+                              _runDetail?.location.isEmpty ?? false
+                                  ? Container()
+                                  : LabelText(
+                                      label: "location",
+                                      value: _runDetail?.location ?? '',
+                                    ),
+                              _runDetail?.direction.isEmpty ?? false
+                                  ? Container()
+                                  : LabelText(
+                                      label: "direction",
+                                      value: _runDetail?.direction ?? '',
+                                    ),
                             ],
                           )
                         : Center(
