@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hasher/actions/hashesAction.dart';
-import 'package:hasher/components/blueLabelText.dart';
+import 'package:hasher/components/labelText.dart';
 import 'package:hasher/components/checkBox.dart';
 import 'package:hasher/components/dialogs.dart';
 import 'package:hasher/screens/myHashClub/editClub.dart';
@@ -52,14 +52,12 @@ class _ClubCardState extends State<ClubCard> {
               ),
               Column(
                 children: [
-                  BlueLabelText(
-                      label: 'Joined On', value: widget.hash!.rundate),
-                  BlueLabelText(
+                  LabelText(label: 'Joined On', value: widget.hash!.rundate),
+                  LabelText(
                       label: 'You have done',
                       value: widget.hash!.total_runs.toString() + ' Runs'),
-                  BlueLabelText(
-                      label: 'Run Area', value: widget.hash!.run_area),
-                  BlueLabelText(label: 'Country', value: widget.hash!.country),
+                  LabelText(label: 'Run Area', value: widget.hash!.run_area),
+                  LabelText(label: 'Country', value: widget.hash!.country),
                 ],
               ),
               Container(

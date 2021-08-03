@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:hasher/actions/hashesAction.dart';
 import 'package:hasher/actions/runDetailAction.dart';
-import 'package:hasher/components/blueLabelText.dart';
+import 'package:hasher/components/labelText.dart';
 import 'package:hasher/components/dialogs.dart';
 import 'package:hasher/constant.dart';
 import 'package:hasher/layouts/index.dart';
@@ -81,27 +81,27 @@ class _RunDetailsState extends State<RunDetails> {
                     child: (_runDetail?.rundate != '')
                         ? Column(
                             children: [
-                              BlueLabelText(
+                              LabelText(
                                 label: "Hare",
                                 value: _runDetail?.hare ?? '',
                               ),
-                              BlueLabelText(
+                              LabelText(
                                 label: "Run Date",
                                 value: _runDetail?.rundate ?? '',
                               ),
-                              BlueLabelText(
+                              LabelText(
                                 label: "Run Time",
                                 value: _runDetail?.runtime ?? '',
                               ),
-                              BlueLabelText(
+                              LabelText(
                                 label: "Run Number",
                                 value: _runDetail?.runnum ?? '',
                               ),
-                              BlueLabelText(
+                              LabelText(
                                 label: "location",
                                 value: _runDetail?.location ?? '',
                               ),
-                              BlueLabelText(
+                              LabelText(
                                 label: "direction",
                                 value: _runDetail?.direction ?? '',
                               ),

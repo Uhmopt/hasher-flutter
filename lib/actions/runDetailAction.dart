@@ -6,7 +6,7 @@ import 'package:hasher/config.dart';
 import 'package:http/http.dart' as http;
 
 Future<RunDetail> getRunDetail(
-    {String club = '', String hashrunid = '', String email = ''}) async {
+    {String club = '', String hashrunid = 'next', String email = ''}) async {
   Map<String, String> headers = {
     "content-type": "application/x-www-form-urlencoded; charset=utf-8"
   };
@@ -22,7 +22,7 @@ Future<RunDetail> getRunDetail(
     encoding: Encoding.getByName("utf-8"),
     body: data,
   );
-  log(response.body);
+  log('getRunDetail: ' + response.body);
   if (response.statusCode == 200) {
     try {
       return new RunDetail.fromJson(jsonDecode(response.body));
