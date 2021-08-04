@@ -16,3 +16,7 @@ const String PREF_HASHER_STATUS = 'PREF_HASHER_STATUS';
 const String DEFAULT_PASSWORD = "123qweasd";
 // ignore: non_constant_identifier_names
 DEFAULT_FUNCTION() {}
+
+// Messages
+const String ERROR_MSG_NETWORK = "Can not connect to the internet.";
+const String MSG_CONNECTING = "Connecting to the server.";

@@ -121,13 +121,8 @@ class _HashRunListState extends State<HashRunList> {
                           onChanged: (value) {
                             setState(() {
                               _clubname = value ?? '';
-                              _loadRunList(
-                                  callback: (RunList runList) {
-                                    log(runList.status);
-                                    print(runList);
-                                  },
-                                  club: value ?? '');
                             });
+                            _loadRunList(club: value ?? '');
                           },
                         ),
                         decoration: ShapeDecoration(

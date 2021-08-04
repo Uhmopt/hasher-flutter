@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:hasher/actions/runDetailAction.dart';
 import 'package:hasher/config.dart';
 import 'package:http/http.dart' as http;
 
@@ -34,28 +33,58 @@ Future<RunList> getRunList({String club = '', String email = ''}) async {
   }
 }
 
+Future<HareRunList> getHareRunList({String club = ''}) async {
+  Map<String, String> headers = {
+    "content-type": "application/x-www-form-urlencoded; charset=utf-8"
+  };
+
+  var data = new Map<String, String>();
+  data['club'] = club;
+
+  final response = await http.post(
+    Uri.parse(apiBase + '/hares_mo.php'),
+    headers: headers,
+    encoding: Encoding.getByName("utf-8"),
+    body: data,
+  );
+  log('getHareRunList: ' + response.body);
+  if (response.statusCode == 200) {
+    try {
+      return new HareRunList.fromJson(jsonDecode(response.body));
+    } catch (e) {
+      return new HareRunList();
+    }
+  } else {
+    return new HareRunList();
+    // throw Exception('Failed to create RunList.');
+  }
+}
+
 class Run {
   String email = "";
-  String run_number = "";
-  String run_date = "";
-  String run_time = "";
+  String runnumber = "";
+  String rundate = "";
+  String runtime = "";
   String hashrunid = "";
+  String hashname = "";
 
   Run({
     this.email = "",
-    this.run_number = "",
-    this.run_date = "",
-    this.run_time = "",
+    this.runnumber = "",
+    this.rundate = "",
+    this.runtime = "",
     this.hashrunid = "",
+    this.hashname = "",
   });
 
   factory Run.fromJson(Map<String, dynamic> json) {
     return new Run(
       email: json['email'] ?? "",
-      run_number: json['run_number'] ?? "",
-      run_date: json['run_date'] ?? "",
-      run_time: json['run_time'] ?? "",
+      runnumber: json['run_number'] ?? json['runnumber'] ?? "",
+      rundate: json['run_date'] ?? json['rundate'] ?? "",
+      runtime: json['run_time'] ?? json['runtime'] ?? "",
       hashrunid: json['hashrunid'] ?? "",
+      hashname: json['hashname'] ?? "",
     );
   }
 }
@@ -77,6 +106,25 @@ class RunList {
       runlist:
           List<Run>.from(json['runlist'].map((item) => new Run.fromJson(item))),
       total: json['total'] ?? "",
+    );
+  }
+}
+
+class HareRunList {
+  List<Run>? hares = [];
+  List<String>? committee = [];
+
+  HareRunList({
+    this.hares,
+    this.committee,
+  });
+
+  factory HareRunList.fromJson(Map<String, dynamic> json) {
+    return new HareRunList(
+      hares:
+          List<Run>.from(json['hares'].map((item) => new Run.fromJson(item))),
+      committee: List<String>.from(
+          json['committee'].map((item) => (item ?? '').toString())),
     );
   }
 }

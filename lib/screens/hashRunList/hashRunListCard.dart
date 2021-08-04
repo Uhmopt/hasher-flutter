@@ -36,15 +36,15 @@ class _HashRunListCardState extends State<HashRunListCard> {
               LabelText(
                 label: "Run Date:",
                 labelSize: 5,
-                value: (widget.run?.run_date ?? '') +
+                value: (widget.run?.rundate ?? '') +
                     ' ' +
-                    (widget.run?.run_time ?? ''),
+                    (widget.run?.runtime ?? ''),
                 color: Colors.pinkAccent,
               ),
               LabelText(
                 label: "Run Number:",
                 labelSize: 5,
-                value: widget.run?.run_number ?? '',
+                value: widget.run?.runnumber ?? '',
                 color: Colors.pinkAccent,
               ),
               Container(
@@ -52,7 +52,7 @@ class _HashRunListCardState extends State<HashRunListCard> {
                 width: double.infinity,
                 child: ElevatedButton(
                   child: Text(
-                    "Click for Moer Details",
+                    "Click for More Details",
                     textScaleFactor: 1.2,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
@@ -63,11 +63,11 @@ class _HashRunListCardState extends State<HashRunListCard> {
                           builder: (context) => RunDetails(
                             hash: new Hash(
                               hashclubname: widget.clubname,
-                              rundate: (widget.run?.run_date ?? '') +
+                              rundate: (widget.run?.rundate ?? '') +
                                   ' ' +
-                                  (widget.run?.run_time ?? ''),
+                                  (widget.run?.runtime ?? ''),
                               total_runs:
-                                  int.tryParse(widget.run?.run_number ?? '') ??
+                                  int.tryParse(widget.run?.runnumber ?? '') ??
                                       0,
                             ),
                             hashRunId: widget.run?.hashrunid ?? 'next',

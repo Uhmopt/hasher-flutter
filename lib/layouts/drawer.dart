@@ -6,6 +6,7 @@ import 'package:hasher/layouts/menuButton.dart';
 import 'package:hasher/screens/auth/login.dart';
 import 'package:hasher/screens/auth/myProfile.dart';
 import 'package:hasher/screens/auth/signUpAvatar.dart';
+import 'package:hasher/screens/hareLineView/index.dart';
 import 'package:hasher/screens/hashRunList/index.dart';
 import 'package:hasher/screens/home/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -97,7 +98,13 @@ class _HashDrawerState extends State<HashDrawer> {
           MenuButton(
             title: 'Hare Line',
             icon: Icons.add_box,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HareLineView(),
+                  ));
+            },
           ),
           MenuButton(
             title: 'Change email',
