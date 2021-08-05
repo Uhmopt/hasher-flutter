@@ -1,12 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:hasher/actions/hashesAction.dart';
 import 'package:hasher/actions/runDetailAction.dart';
-import 'package:hasher/components/labelText.dart';
 import 'package:hasher/components/dialogs.dart';
+import 'package:hasher/components/labelText.dart';
 import 'package:hasher/constant.dart';
 import 'package:hasher/layouts/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -70,7 +68,7 @@ class _RunDetailsState extends State<RunDetails> {
               padding: const EdgeInsets.only(bottom: 10),
               decoration: BoxDecoration(
                   border: Border(
-                      bottom: BorderSide(color: Colors.black38, width: 2))),
+                      bottom: BorderSide(color: Colors.black45, width: 2))),
             ),
             // TextButton(onPressed: _init, child: Text('reload')),
             Container(

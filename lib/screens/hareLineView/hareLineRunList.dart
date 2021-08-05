@@ -5,10 +5,17 @@ import 'package:hasher/screens/hareLineView/hareLineRunCard.dart';
 
 // ignore: must_be_immutable
 class HareLineRunList extends StatefulWidget {
-  HareLineRunList({Key? key, this.runList, this.hashname = ''})
+  HareLineRunList(
+      {Key? key,
+      this.runList,
+      this.hashname = '',
+      this.clubname = '',
+      this.committee})
       : super(key: key);
   List<Run>? runList = [];
   String hashname = "";
+  String clubname = "";
+  List<String>? committee = [];
 
   @override
   _HareLineRunListState createState() => _HareLineRunListState();
@@ -37,8 +44,14 @@ class _HareLineRunListState extends State<HareLineRunList> {
                             ),
                           )))
                 ]
-              : widget.runList!.map<Widget>((run) => HareLineRunCard(
-                  run: run, editable: (widget.hashname == run.hashname)))))
+              : widget.runList!.map<Widget>(
+                  (run) => HareLineRunCard(
+                    run: run,
+                    editable: (widget.hashname == run.hashname),
+                    clubname: widget.clubname,
+                    committee: widget.committee,
+                  ),
+                )))
         ],
       ),
     );

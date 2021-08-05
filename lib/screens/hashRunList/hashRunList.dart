@@ -6,6 +6,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:hasher/actions/hashesAction.dart';
 import 'package:hasher/actions/runListAction.dart';
 import 'package:hasher/components/dialogs.dart';
+import 'package:hasher/config.dart';
 import 'package:hasher/constant.dart';
 import 'package:hasher/screens/hashRunList/hashRunListCard.dart';
 import 'package:hasher/screens/home/home.dart';
@@ -98,7 +99,7 @@ class _HashRunListState extends State<HashRunList> {
               padding: const EdgeInsets.only(bottom: 10),
               decoration: BoxDecoration(
                   border: Border(
-                      bottom: BorderSide(color: Colors.black38, width: 2))),
+                      bottom: BorderSide(color: Colors.black45, width: 2))),
             ),
             _clubList.isEmpty
                 ? Container()
@@ -108,8 +109,7 @@ class _HashRunListState extends State<HashRunList> {
                       child: Container(
                         padding: const EdgeInsets.all(5),
                         child: DropdownButton<String>(
-                          hint: Text(
-                              "My Hash Club" + _clubList.length.toString()),
+                          hint: Text("My Hash Club"),
                           items: (_clubList.isEmpty ? [] : _clubList)
                               .map((club) => DropdownMenuItem<String>(
                                   value: (club.hashclubname).toString(),
@@ -128,9 +128,11 @@ class _HashRunListState extends State<HashRunList> {
                         decoration: ShapeDecoration(
                           shape: RoundedRectangleBorder(
                             side: BorderSide(
-                                width: 1.0, style: BorderStyle.solid),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(5.0)),
+                                width: 1.0,
+                                style: BorderStyle.solid,
+                                color: Colors.black45),
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(BORDER_RADIUS)),
                           ),
                         ),
                       ),

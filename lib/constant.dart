@@ -20,3 +20,4 @@ DEFAULT_FUNCTION() {}
 // Messages
 const String ERROR_MSG_NETWORK = "Can not connect to the internet.";
 const String MSG_CONNECTING = "Connecting to the server.";
+const String MSG_ACCESS_DENNIED = "You have no permission.";

@@ -7,6 +7,7 @@ import 'package:hasher/actions/hashesAction.dart';
 import 'package:hasher/actions/runListAction.dart';
 import 'package:hasher/components/checkBox.dart';
 import 'package:hasher/components/dialogs.dart';
+import 'package:hasher/config.dart';
 import 'package:hasher/constant.dart';
 import 'package:hasher/screens/hareLineView/hareLineIcons.dart';
 import 'package:hasher/screens/hareLineView/hareLineRunList.dart';
@@ -96,8 +97,7 @@ class _HareLineViewContentState extends State<HareLineViewContent> {
                     child: Container(
                       padding: const EdgeInsets.all(5),
                       child: DropdownButton<String>(
-                        hint:
-                            Text("My Hash Club" + _clubList.length.toString()),
+                        hint: Text("My Hash Club"),
                         items: (_clubList.isEmpty ? [] : _clubList)
                             .map((club) => DropdownMenuItem<String>(
                                 value: (club.hashclubname).toString(),
@@ -115,9 +115,12 @@ class _HareLineViewContentState extends State<HareLineViewContent> {
                       ),
                       decoration: ShapeDecoration(
                         shape: RoundedRectangleBorder(
-                          side:
-                              BorderSide(width: 1.0, style: BorderStyle.solid),
-                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                          side: BorderSide(
+                              width: 1.0,
+                              style: BorderStyle.solid,
+                              color: Colors.black45),
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(BORDER_RADIUS)),
                         ),
                       ),
                     ),
@@ -151,7 +154,9 @@ class _HareLineViewContentState extends State<HareLineViewContent> {
                   DateTime t = DateTime.parse(run.rundate);
                   return t.isAfter(DateTime.now());
                 }).toList(),
-                hashname: _hashName))
+                committee: _runList.committee,
+                hashname: _hashName,
+                clubname: _clubname))
       ],
     );
   }

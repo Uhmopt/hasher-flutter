@@ -33,27 +33,28 @@ class MyApp extends StatelessWidget {
           style: ElevatedButton.styleFrom(
               primary: Colors.indigoAccent,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(borderRadius),
+                borderRadius: BorderRadius.circular(BORDER_RADIUS),
               )),
         ),
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
               primary: Colors.indigoAccent,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(borderRadius),
+                borderRadius: BorderRadius.circular(BORDER_RADIUS),
               )),
         ),
         textButtonTheme: TextButtonThemeData(
             style: TextButton.styleFrom(
                 primary: Colors.indigoAccent,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(borderRadius),
+                  borderRadius: BorderRadius.circular(BORDER_RADIUS),
                 ))),
         inputDecorationTheme: InputDecorationTheme(
             contentPadding: const EdgeInsets.all(0),
             border: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.indigoAccent),
-                borderRadius: BorderRadius.all(Radius.circular(borderRadius)))),
+                borderRadius:
+                    BorderRadius.all(Radius.circular(BORDER_RADIUS)))),
       ),
     );
   }

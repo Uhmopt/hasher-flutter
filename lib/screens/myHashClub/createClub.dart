@@ -45,9 +45,9 @@ class _CreateClubState extends State<CreateClub> {
     if (picked != null)
       setState(() => tc.text = picked.year.toString() +
           '-' +
-          picked.month.toString() +
+          picked.month.toString().padLeft(2, '0') +
           '-' +
-          picked.day.toString());
+          picked.day.toString().padLeft(2, '0'));
   }
 
   _handleCreate() {

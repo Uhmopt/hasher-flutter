@@ -1,12 +1,11 @@
-import 'dart:developer';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hasher/actions/hashesAction.dart';
-import 'package:hasher/components/labelText.dart';
 import 'package:hasher/components/checkBox.dart';
 import 'package:hasher/components/dialogs.dart';
+import 'package:hasher/components/labelText.dart';
 import 'package:hasher/screens/myHashClub/editClub.dart';
 import 'package:hasher/screens/myHashClub/runDetails.dart';
 

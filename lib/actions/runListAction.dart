@@ -89,6 +89,43 @@ class Run {
   }
 }
 
+Future<HareRunList> addHareRun({
+  String runnumber = '',
+  String rundate = '',
+  String runtime = '',
+  String hare = '',
+  String club = '',
+}) async {
+  Map<String, String> headers = {
+    "content-type": "application/x-www-form-urlencoded; charset=utf-8"
+  };
+
+  var data = new Map<String, String>();
+  data['runnumber'] = runnumber;
+  data['rundate'] = rundate;
+  data['runtime'] = runtime;
+  data['hare'] = hare;
+  data['club'] = club;
+
+  final response = await http.post(
+    Uri.parse(apiBase + '/addrun_mo.php'),
+    headers: headers,
+    encoding: Encoding.getByName("utf-8"),
+    body: data,
+  );
+  log('addHareRun: ' + response.body);
+  if (response.statusCode == 200) {
+    try {
+      return new HareRunList.fromJson(jsonDecode(response.body));
+    } catch (e) {
+      return new HareRunList();
+    }
+  } else {
+    return new HareRunList();
+    // throw Exception('Failed to create RunList.');
+  }
+}
+
 class RunList {
   String status = 'fail';
   List<Run>? runlist = [];
