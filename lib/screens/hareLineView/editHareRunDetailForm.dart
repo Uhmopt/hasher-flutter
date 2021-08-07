@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hasher/actions/runListAction.dart';
+import 'package:hasher/components/labelText.dart';
+import 'package:hasher/components/locationPicker.dart';
 import 'package:hasher/components/radioGroup.dart';
 import 'package:hasher/constant.dart';
 import 'package:hasher/helper/helpers.dart';
@@ -171,6 +173,14 @@ class _EditHareRunDetailFormState extends State<EditHareRunDetailForm> {
                   maxLines: null,
                 ),
               ),
+              Container(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: LocationPicker(
+                    label: 'Run Location',
+                    color: Colors.indigoAccent,
+                    onSelect: (v) {},
+                    // value: _runLocation,
+                  )),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Card(
