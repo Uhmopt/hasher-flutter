@@ -1,40 +1,33 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:hasher/actions/coHareAction.dart';
-import 'package:hasher/actions/hareAction.dart';
 import 'package:hasher/actions/runListAction.dart';
-import 'package:hasher/components/dialogs.dart';
-import 'package:hasher/components/textDropDown.dart';
+import 'package:hasher/components/radioGroup.dart';
 import 'package:hasher/constant.dart';
 import 'package:hasher/helper/helpers.dart';
 
 // ignore: must_be_immutable
-class EditHareRun extends StatefulWidget {
-  EditHareRun(
-      {Key? key,
-      required this.run,
-      required this.committee,
-      this.clubname = ''})
+class EditHareRunDetailForm extends StatefulWidget {
+  EditHareRunDetailForm({Key? key, required this.run, this.clubname = ''})
       : super(key: key);
   Run run = new Run();
   List<String> committee = [];
   String clubname = "";
 
   @override
-  _EditHareRunState createState() => _EditHareRunState();
+  _EditHareRunDetailFormState createState() => _EditHareRunDetailFormState();
 }
 
-class _EditHareRunState extends State<EditHareRun> {
-  final GlobalKey<FormState> _editHareRunForm = GlobalKey<FormState>();
+class _EditHareRunDetailFormState extends State<EditHareRunDetailForm> {
+  final GlobalKey<FormState> _editHareRunDetailForm = GlobalKey<FormState>();
   TextEditingController _textRunNumber = new TextEditingController();
   TextEditingController _textRunDate = new TextEditingController();
   TextEditingController _textRunTime = new TextEditingController();
-  List<String> _harenames = [];
-  String _harename = '';
-  List<String> _coharenames = [];
+  TextEditingController _textRunDirections = new TextEditingController();
+  TextEditingController _textRunFee = new TextEditingController();
+  TextEditingController _textRunDescription = new TextEditingController();
   bool _isEdit = false;
+  String _onon = '';
 
   Future _selectDate(TextEditingController tc) async {
     final picked = await showDatePicker(
@@ -62,85 +55,8 @@ class _EditHareRunState extends State<EditHareRun> {
           picked.minute.toString().padLeft(2, '0'));
   }
 
-  _initHare() {
-    showLoading();
-    getClubHare(widget.clubname).then((hares) {
-      SmartDialog.dismiss();
-      setState(() {
-        _harenames = hares;
-      });
-    });
-  }
-
-  _saveHareRun() {
-    if (_editHareRunForm.currentState!.validate()) {
-      showLoading();
-      if (_isEdit) {
-        updateHareRun(
-          hashrunid: widget.run.hashrunid,
-          hare: _harename,
-          rundate: _textRunDate.text,
-          runtime: _textRunTime.text,
-        ).then((value) {
-          if (value.status == 'success') {
-            showMessage(MSG_SAVED);
-          } else {
-            showMessage(MSG_NOT_SAVED);
-          }
-          SmartDialog.dismiss();
-        });
-      } else {
-        addHareRun(
-          runnumber: _textRunNumber.text,
-          rundate: _textRunDate.text,
-          runtime: _textRunTime.text,
-          hare: _harename,
-          club: widget.clubname,
-        ).then((value) {
-          if (value.status == 'success') {
-            showMessage(MSG_SAVED);
-            // redirect
-            Navigator.pop(context);
-          } else {
-            showMessage(MSG_NOT_SAVED);
-          }
-          SmartDialog.dismiss();
-        });
-      }
-    }
-  }
-
-  _addCoHare(value) {
-    if (_isEdit) {
-      showLoading();
-      addCoHare(hashrunid: widget.run.hashrunid, cohare: value).then((res) {
-        SmartDialog.dismiss();
-        if (res.status == 'success') {
-          setState(() {
-            _coharenames = [..._coharenames, (value ?? '')];
-          });
-        } else {
-          showMessage(MSG_NOT_SAVED);
-        }
-      });
-    }
-  }
-
-  _removeCoHare(value) {
-    if (_isEdit) {
-      showLoading();
-      deleteCoHare(hashrunid: widget.run.hashrunid, cohare: value).then((res) {
-        SmartDialog.dismiss();
-        if (res.status == 'success') {
-          setState(() {
-            _coharenames =
-                _coharenames.where((element) => element != value).toList();
-          });
-        } else {
-          showMessage(MSG_NOT_SAVED);
-        }
-      });
-    }
+  _saveRunDetail() {
+    if (_editHareRunDetailForm.currentState!.validate()) {}
   }
 
   _initValues() {
@@ -149,7 +65,6 @@ class _EditHareRunState extends State<EditHareRun> {
       _textRunDate.text = widget.run.rundate;
       _textRunTime.text = widget.run.runtime;
       _textRunTime.text = widget.run.runtime;
-      _harename = widget.run.hashname;
 
       _isEdit = int.parse(widget.run.hashrunid) > 0;
     });
@@ -159,13 +74,12 @@ class _EditHareRunState extends State<EditHareRun> {
   void initState() {
     super.initState();
     _initValues();
-    _initHare();
   }
 
   @override
   Widget build(BuildContext context) {
     return Form(
-        key: _editHareRunForm,
+        key: _editHareRunDetailForm,
         child: Container(
           child: Column(
             children: [
@@ -184,11 +98,9 @@ class _EditHareRunState extends State<EditHareRun> {
                       labelText: "Run Number",
                       prefixIcon: Icon(Icons.format_list_numbered),
                       isDense: true,
-                      hintText: "Please input Run Number"),
+                      hintText: MSG_INPUT_NUMBER),
                   keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly
-                  ], // Only numbers can be entered
+                  inputFormatters: inputNumberFormatter,
                 ),
               ),
               Container(
@@ -239,72 +151,114 @@ class _EditHareRunState extends State<EditHareRun> {
                   enableInteractiveSelection: false,
                 ),
               ),
-              (_isEdit)
-                  ? Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: TextDropDown(
-                        value: _harename,
-                        label: 'Hare',
-                        hint: 'Select Hare',
-                        options: _harenames,
-                        onChange: (value) {
-                          setState(() {
-                            _harename = value ?? '';
-                          });
-                        },
-                      ),
-                    )
-                  : Container(),
               Container(
-                width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 10),
-                child: TextDropDown(
-                    // value: _harename,
-                    label: 'CoHare',
-                    hint: 'Add CoHare',
-                    options: _harenames,
-                    onChange: _addCoHare),
+                child: TextFormField(
+                  controller: _textRunDirections,
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return MSG_REQUIRE_FIELD;
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    labelText: "Run Directions",
+                    prefixIcon: Icon(Icons.show_chart),
+                    isDense: true,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 20),
+                  ),
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                ),
               ),
               Container(
-                child: Wrap(
-                  children: List<Widget>.from(_coharenames.map((cohare) => Chip(
-                      label: Text(cohare),
-                      onDeleted: () => _removeCoHare(cohare)))),
-                  spacing: 5,
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Card(
+                  child: Container(
+                    padding: const EdgeInsets.all(20),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.restaurant,
+                          color: Colors.indigoAccent,
+                        ),
+                        Text(
+                          " OnOn: ",
+                          textScaleFactor: 1.2,
+                          style: TextStyle(
+                            color: Colors.indigoAccent,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Container(
+                          child: RadioGroup(
+                            options: ['Yes', 'No'],
+                            value: _onon,
+                            onChanged: (value) {
+                              setState(() {
+                                _onon = value ?? '';
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: TextFormField(
+                  controller: _textRunFee,
+                  validator: (String? value) {
+                    if (value == null || !checkNumber(value)) {
+                      return MSG_INPUT_NUMBER;
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                      labelText: "OnOn Fee",
+                      prefixIcon: Icon(Icons.attach_money),
+                      isDense: true,
+                      hintText: MSG_INPUT_NUMBER),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: inputNumberFormatter,
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: TextFormField(
+                  controller: _textRunDescription,
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return MSG_REQUIRE_FIELD;
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    labelText: "OnOn Description",
+                    prefixIcon: Icon(Icons.show_chart),
+                    isDense: true,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 20),
+                  ),
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
                 ),
               ),
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: ElevatedButton(
-                  onPressed: _saveHareRun,
+                  onPressed: _saveRunDetail,
                   child: Container(
                     padding: const EdgeInsets.all(15),
                     child: Text(
-                      'Update Run',
+                      'Add Run Detail',
                       textScaleFactor: 1.3,
                     ),
                   ),
                 ),
               ),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: Container(
-                    padding: const EdgeInsets.all(15),
-                    child: Text(
-                      'Add or Edit Details',
-                      textScaleFactor: 1.3,
-                    ),
-                  ),
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.pinkAccent)),
-                ),
-              )
             ],
           ),
         ));

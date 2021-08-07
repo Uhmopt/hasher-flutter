@@ -35,6 +35,36 @@ Future<RunDetail> getRunDetail(
   }
 }
 
+Future<RunDetail> updateRunDetail(
+    {String club = '', String hashrunid = 'next', String email = ''}) async {
+  Map<String, String> headers = {
+    "content-type": "application/x-www-form-urlencoded; charset=utf-8"
+  };
+
+  var data = new Map<String, String>();
+  data['club'] = club;
+  data['hashrunid'] = hashrunid;
+  data['email'] = email;
+
+  final response = await http.post(
+    Uri.parse(apiBase + '/rundetail_mo.php'),
+    headers: headers,
+    encoding: Encoding.getByName("utf-8"),
+    body: data,
+  );
+  log('getRunDetail: ' + response.body);
+  if (response.statusCode == 200) {
+    try {
+      return new RunDetail.fromJson(jsonDecode(response.body));
+    } catch (e) {
+      return new RunDetail(status: 'fail');
+    }
+  } else {
+    return new RunDetail(status: 'fail');
+    // throw Exception('Failed to create RunDetail.');
+  }
+}
+
 class RunDetail {
   String status = 'fail';
   String rundate = '';

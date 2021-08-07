@@ -179,9 +179,7 @@ class _CreateClubState extends State<CreateClub> {
                           isDense: true,
                           hintText: "Please input total Runs"),
                       keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly
-                      ], // Only numbers can be entered
+                      inputFormatters: inputNumberFormatter,
                     ),
                   ),
                   Container(

@@ -24,3 +24,4 @@ const String MSG_ACCESS_DENNIED = "You have no permission.";
 const String MSG_NOT_SAVED = "Not Saved";
 const String MSG_SAVED = "Saved successfully.";
 const String MSG_INPUT_NUMBER = 'Please insert correct number';
+const String MSG_REQUIRE_FIELD = 'Please fill this field.';

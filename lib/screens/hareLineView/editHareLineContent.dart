@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hasher/actions/runListAction.dart';
-import 'package:hasher/screens/hareLineView/editHareRun.dart';
+import 'package:hasher/screens/hareLineView/editHareRunDetail.dart';
+import 'package:hasher/screens/hareLineView/editHareRunForm.dart';
 
 // ignore: must_be_immutable
 class EditHareLineContent extends StatefulWidget {
@@ -38,12 +39,38 @@ class _EditHareLineContentState extends State<EditHareLineContent> {
         ),
         Container(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-          child: EditHareRun(
+          child: EditHareRunForm(
             run: widget.run,
             committee: widget.committee ?? [],
             clubname: widget.clubname,
           ),
-        )
+        ),
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          child: ElevatedButton(
+            onPressed: () {
+              // redirect
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditHareRunDetail(
+                      run: widget.run,
+                      clubname: widget.clubname,
+                    ),
+                  ));
+            },
+            child: Container(
+              padding: const EdgeInsets.all(15),
+              child: Text(
+                'Add or Edit Details',
+                textScaleFactor: 1.3,
+              ),
+            ),
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.pinkAccent)),
+          ),
+        ),
       ],
     );
   }

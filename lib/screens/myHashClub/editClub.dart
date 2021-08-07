@@ -103,9 +103,7 @@ class _EditClubState extends State<EditClub> {
                               isDense: true,
                               hintText: "Please input total Runs"),
                           keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly
-                          ], // Only numbers can be entered
+                          inputFormatters: inputNumberFormatter,
                         ),
                       ),
                       Container(
