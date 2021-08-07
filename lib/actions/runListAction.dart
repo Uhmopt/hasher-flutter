@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:hasher/actions/authAction.dart';
 import 'package:hasher/config.dart';
 import 'package:http/http.dart' as http;
 
@@ -89,7 +90,7 @@ class Run {
   }
 }
 
-Future<HareRunList> addHareRun({
+Future<Result> addHareRun({
   String runnumber = '',
   String rundate = '',
   String runtime = '',
@@ -116,12 +117,47 @@ Future<HareRunList> addHareRun({
   log('addHareRun: ' + response.body);
   if (response.statusCode == 200) {
     try {
-      return new HareRunList.fromJson(jsonDecode(response.body));
+      return new Result.fromJson(jsonDecode(response.body));
     } catch (e) {
-      return new HareRunList();
+      return new Result(status: 'fail');
     }
   } else {
-    return new HareRunList();
+    return new Result(status: 'fail');
+    // throw Exception('Failed to create RunList.');
+  }
+}
+
+Future<Result> updateHareRun({
+  String hashrunid = '',
+  String rundate = '',
+  String runtime = '',
+  String hare = '',
+}) async {
+  Map<String, String> headers = {
+    "content-type": "application/x-www-form-urlencoded; charset=utf-8"
+  };
+
+  var data = new Map<String, String>();
+  data['hashrunid'] = hashrunid;
+  data['rundate'] = rundate;
+  data['runtime'] = runtime;
+  data['hare'] = hare;
+
+  final response = await http.post(
+    Uri.parse(apiBase + '/updaterun_mo.php'),
+    headers: headers,
+    encoding: Encoding.getByName("utf-8"),
+    body: data,
+  );
+  log('updateHareRun: ' + response.body);
+  if (response.statusCode == 200) {
+    try {
+      return new Result.fromJson(jsonDecode(response.body));
+    } catch (e) {
+      return new Result(status: 'fail');
+    }
+  } else {
+    return new Result(status: 'fail');
     // throw Exception('Failed to create RunList.');
   }
 }

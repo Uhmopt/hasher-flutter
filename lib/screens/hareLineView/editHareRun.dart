@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:hasher/actions/coHareAction.dart';
 import 'package:hasher/actions/hareAction.dart';
 import 'package:hasher/actions/runListAction.dart';
 import 'package:hasher/components/dialogs.dart';
 import 'package:hasher/components/textDropDown.dart';
-import 'package:hasher/components/textDropDownMulti.dart';
+import 'package:hasher/constant.dart';
 import 'package:hasher/helper/helpers.dart';
 
 // ignore: must_be_immutable
@@ -33,11 +34,12 @@ class _EditHareRunState extends State<EditHareRun> {
   List<String> _harenames = [];
   String _harename = '';
   List<String> _coharenames = [];
+  bool _isEdit = false;
 
   Future _selectDate(TextEditingController tc) async {
     final picked = await showDatePicker(
         context: context,
-        initialDate: new DateTime.now(),
+        initialDate: DateTime.parse(tc.text),
         firstDate: new DateTime(1950),
         lastDate: new DateTime.now().add(const Duration(days: 3650)));
     if (picked != null)
@@ -51,7 +53,8 @@ class _EditHareRunState extends State<EditHareRun> {
   Future _selectTime(TextEditingController tc) async {
     final picked = await showTimePicker(
       context: context,
-      initialTime: new TimeOfDay.now(),
+      initialTime:
+          TimeOfDay.fromDateTime(DateTime.parse('1970-01-01 ' + tc.text)),
     );
     if (picked != null)
       setState(() => tc.text = picked.hour.toString().padLeft(2, '0') +
@@ -72,21 +75,90 @@ class _EditHareRunState extends State<EditHareRun> {
   _saveHareRun() {
     if (_editHareRunForm.currentState!.validate()) {
       showLoading();
-      addHareRun(
-        runnumber: _textRunNumber.text,
-        rundate: _textRunDate.text,
-        runtime: _textRunTime.text,
-        hare: _harename,
-        club: widget.clubname,
-      ).then((value) {
+      if (_isEdit) {
+        updateHareRun(
+          hashrunid: widget.run.hashrunid,
+          hare: _harename,
+          rundate: _textRunDate.text,
+          runtime: _textRunTime.text,
+        ).then((value) {
+          if (value.status == 'success') {
+            showMessage(MSG_SAVED);
+          } else {
+            showMessage(MSG_NOT_SAVED);
+          }
+          SmartDialog.dismiss();
+        });
+      } else {
+        addHareRun(
+          runnumber: _textRunNumber.text,
+          rundate: _textRunDate.text,
+          runtime: _textRunTime.text,
+          hare: _harename,
+          club: widget.clubname,
+        ).then((value) {
+          if (value.status == 'success') {
+            showMessage(MSG_SAVED);
+            // redirect
+            Navigator.pop(context);
+          } else {
+            showMessage(MSG_NOT_SAVED);
+          }
+          SmartDialog.dismiss();
+        });
+      }
+    }
+  }
+
+  _addCoHare(value) {
+    if (_isEdit) {
+      showLoading();
+      addCoHare(hashrunid: widget.run.hashrunid, cohare: value).then((res) {
         SmartDialog.dismiss();
+        if (res.status == 'success') {
+          setState(() {
+            _coharenames = [..._coharenames, (value ?? '')];
+          });
+        } else {
+          showMessage(MSG_NOT_SAVED);
+        }
       });
     }
+  }
+
+  _removeCoHare(value) {
+    if (_isEdit) {
+      showLoading();
+      deleteCoHare(hashrunid: widget.run.hashrunid, cohare: value).then((res) {
+        SmartDialog.dismiss();
+        if (res.status == 'success') {
+          setState(() {
+            _coharenames =
+                _coharenames.where((element) => element != value).toList();
+          });
+        } else {
+          showMessage(MSG_NOT_SAVED);
+        }
+      });
+    }
+  }
+
+  _initValues() {
+    setState(() {
+      _textRunNumber.text = widget.run.runnumber;
+      _textRunDate.text = widget.run.rundate;
+      _textRunTime.text = widget.run.runtime;
+      _textRunTime.text = widget.run.runtime;
+      _harename = widget.run.hashname;
+
+      _isEdit = int.parse(widget.run.hashrunid) > 0;
+    });
   }
 
   @override
   void initState() {
     super.initState();
+    _initValues();
     _initHare();
   }
 
@@ -98,20 +170,16 @@ class _EditHareRunState extends State<EditHareRun> {
           child: Column(
             children: [
               Container(
-                  child: TextButton(
-                child: Text('asd'),
-                onPressed: _initHare,
-              )),
-              Container(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: TextFormField(
                   controller: _textRunNumber,
                   validator: (String? value) {
                     if (value == null || !checkNumber(value)) {
-                      return 'Please inset correct number';
+                      return MSG_INPUT_NUMBER;
                     }
                     return null;
                   },
+                  readOnly: _isEdit,
                   decoration: InputDecoration(
                       labelText: "Run Number",
                       prefixIcon: Icon(Icons.format_list_numbered),
@@ -171,34 +239,39 @@ class _EditHareRunState extends State<EditHareRun> {
                   enableInteractiveSelection: false,
                 ),
               ),
+              (_isEdit)
+                  ? Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: TextDropDown(
+                        value: _harename,
+                        label: 'Hare',
+                        hint: 'Select Hare',
+                        options: _harenames,
+                        onChange: (value) {
+                          setState(() {
+                            _harename = value ?? '';
+                          });
+                        },
+                      ),
+                    )
+                  : Container(),
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: TextDropDown(
-                  value: _harename,
-                  label: 'Hare',
-                  hint: 'Select Hare',
-                  options: _harenames,
-                  onChange: (value) {
-                    setState(() {
-                      _harename = value ?? '';
-                    });
-                  },
-                ),
+                    // value: _harename,
+                    label: 'CoHare',
+                    hint: 'Add CoHare',
+                    options: _harenames,
+                    onChange: _addCoHare),
               ),
               Container(
-                width: double.infinity,
-                padding: const EdgeInsets.only(bottom: 10),
-                child: TextDropDownMulti(
-                  onSelect: (List<String> value) {
-                    setState(() {
-                      _coharenames = value;
-                    });
-                  },
-                  options: _harenames,
-                  selected: _coharenames,
-                  hint: 'Select CoHare',
-                  label: 'CoHare',
+                child: Wrap(
+                  children: List<Widget>.from(_coharenames.map((cohare) => Chip(
+                      label: Text(cohare),
+                      onDeleted: () => _removeCoHare(cohare)))),
+                  spacing: 5,
                 ),
               ),
               Container(

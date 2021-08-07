@@ -21,3 +21,6 @@ DEFAULT_FUNCTION() {}
 const String ERROR_MSG_NETWORK = "Can not connect to the internet.";
 const String MSG_CONNECTING = "Connecting to the server.";
 const String MSG_ACCESS_DENNIED = "You have no permission.";
+const String MSG_NOT_SAVED = "Not Saved";
+const String MSG_SAVED = "Saved successfully.";
+const String MSG_INPUT_NUMBER = 'Please insert correct number';
