@@ -34,10 +34,17 @@ dependencies:
   responsive_builder: ^0.4.1
   flutter_svg: ^0.22.0
   multiselect: ^0.0.4
+  google_maps_flutter: ^2.0.1
+  json_serializable: ^4.1.4
+  map_pin_picker: ^0.0.1
+  geocoder: ^0.2.1
+  google_maps_place_picker: ^2.0.0-nullsafety.3
 
 dev_dependencies:
+  build_runner: ^2.1.0
   flutter_test:
     sdk: flutter
+  pedantic: ^1.11.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

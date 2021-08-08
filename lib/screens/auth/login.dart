@@ -38,10 +38,10 @@ class _LoginState extends State<Login> {
       try {
         loginAction(email, password).then((result) {
           log(result.status);
-          if (result.status == 'success') {
+          if (result.status == SUCCESS) {
             basicHasherInfo(email).then((hasher) {
               log(hasher.status);
-              if (hasher.status == 'success') {
+              if (hasher.status == SUCCESS) {
                 // close modal and show message
                 SmartDialog.dismiss();
                 showMessage("Successfully Logged in: " + email);

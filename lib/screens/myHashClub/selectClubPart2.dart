@@ -57,7 +57,7 @@ class _SelectClubPart2State extends State<SelectClubPart2> {
                 roles: roles)
             .then((result) {
           SmartDialog.dismiss();
-          if (result.status == 'success') {
+          if (result.status == SUCCESS) {
             showMessage("Successfully selected");
             showConfirmDialog(
                 context: context,

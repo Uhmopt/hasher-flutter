@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:hasher/actions/authAction.dart';
 import 'package:hasher/config.dart';
+import 'package:hasher/constant.dart';
 import 'package:http/http.dart' as http;
 
 Future<Profiles> getProfiles(String email) async {
@@ -25,10 +26,10 @@ Future<Profiles> getProfiles(String email) async {
     try {
       return Profiles.fromJson(jsonDecode(response.body));
     } catch (e) {
-      return Profiles(status: 'fail');
+      return Profiles(status: FAIL);
     }
   } else {
-    return Profiles(status: 'fail');
+    return Profiles(status: FAIL);
     // throw Exception('Failed to create Profiles.');
   }
 }
@@ -71,10 +72,10 @@ Future<Result> updateProfileAction({
     try {
       return Result.fromJson(jsonDecode(response.body));
     } catch (e) {
-      return Result(status: 'fail');
+      return Result(status: FAIL);
     }
   } else {
-    return Result(status: 'fail');
+    return Result(status: FAIL);
     // throw Exception('Failed to create Profiles.');
   }
 }
@@ -105,10 +106,10 @@ Future<Result> updatePasswordAction({
     try {
       return Result.fromJson(jsonDecode(response.body));
     } catch (e) {
-      return Result(status: 'fail');
+      return Result(status: FAIL);
     }
   } else {
-    return Result(status: 'fail');
+    return Result(status: FAIL);
     // throw Exception('Failed to create Profiles.');
   }
 }
@@ -174,14 +175,14 @@ class Profile {
 }
 
 class Profiles {
-  String status = 'fail';
+  String status = FAIL;
   List<Profile>? profiles;
 
   Profiles({required this.status, this.profiles});
 
   factory Profiles.fromJson(Map<String, dynamic> json) {
     return Profiles(
-      status: json['status'] ?? 'fail',
+      status: json['status'] ?? FAIL,
       profiles: List<Profile>.from(
           json['profile'].map((item) => Profile.fromJson(item))),
     );

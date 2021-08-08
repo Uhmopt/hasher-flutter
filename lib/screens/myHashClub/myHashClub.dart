@@ -37,7 +37,7 @@ class _MyHashClubState extends State<MyHashClub> {
         if (strEmail.length > 0) {
           showLoading();
           basicHasherInfo(strEmail).then((hashesResult) {
-            if (hashesResult.status == 'success') {
+            if (hashesResult.status == SUCCESS) {
               setState(() {
                 _hashArray = hashesResult.hashes;
               });

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:hasher/actions/authAction.dart';
 import 'package:hasher/config.dart';
+import 'package:hasher/constant.dart';
 import 'package:http/http.dart' as http;
 
 Future<Result> addCoHare({String hashrunid = '', String cohare = ''}) async {
@@ -26,10 +27,10 @@ Future<Result> addCoHare({String hashrunid = '', String cohare = ''}) async {
     try {
       return Result.fromJson(jsonDecode(response.body));
     } catch (e) {
-      return Result(status: 'fail');
+      return Result(status: FAIL);
     }
   } else {
-    return Result(status: 'fail');
+    return Result(status: FAIL);
     // throw Exception('Failed to create Hares.');
   }
 }
@@ -55,10 +56,10 @@ Future<Result> deleteCoHare({String hashrunid = '', String cohare = ''}) async {
     try {
       return Result.fromJson(jsonDecode(response.body));
     } catch (e) {
-      return Result(status: 'fail');
+      return Result(status: FAIL);
     }
   } else {
-    return Result(status: 'fail');
+    return Result(status: FAIL);
     // throw Exception('Failed to create Hares.');
   }
 }

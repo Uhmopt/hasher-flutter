@@ -83,7 +83,7 @@ class _EditHareRunFormState extends State<EditHareRunForm> {
           rundate: _textRunDate.text,
           runtime: _textRunTime.text,
         ).then((value) {
-          if (value.status == 'success') {
+          if (value.status == SUCCESS) {
             showMessage(MSG_SAVED);
           } else {
             showMessage(MSG_NOT_SAVED);
@@ -98,7 +98,7 @@ class _EditHareRunFormState extends State<EditHareRunForm> {
           hare: _harename,
           club: widget.clubname,
         ).then((value) {
-          if (value.status == 'success') {
+          if (value.status == SUCCESS) {
             showMessage(MSG_SAVED);
             // redirect
             Navigator.pop(context);
@@ -116,7 +116,7 @@ class _EditHareRunFormState extends State<EditHareRunForm> {
       showLoading();
       addCoHare(hashrunid: widget.run.hashrunid, cohare: value).then((res) {
         SmartDialog.dismiss();
-        if (res.status == 'success') {
+        if (res.status == SUCCESS) {
           setState(() {
             _coharenames = [..._coharenames, (value ?? '')];
           });
@@ -132,7 +132,7 @@ class _EditHareRunFormState extends State<EditHareRunForm> {
       showLoading();
       deleteCoHare(hashrunid: widget.run.hashrunid, cohare: value).then((res) {
         SmartDialog.dismiss();
-        if (res.status == 'success') {
+        if (res.status == SUCCESS) {
           setState(() {
             _coharenames =
                 _coharenames.where((element) => element != value).toList();

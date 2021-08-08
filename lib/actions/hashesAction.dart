@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:hasher/config.dart';
+import 'package:hasher/constant.dart';
 import 'package:http/http.dart' as http;
 
 Future<Hashes> getMyHashes(String email) async {
@@ -24,10 +25,10 @@ Future<Hashes> getMyHashes(String email) async {
     try {
       return Hashes.fromJson(jsonDecode(response.body));
     } catch (e) {
-      return Hashes(status: 'fail');
+      return Hashes(status: FAIL);
     }
   } else {
-    return Hashes(status: 'fail');
+    return Hashes(status: FAIL);
     // throw Exception('Failed to create Hashes.');
   }
 }
@@ -89,7 +90,7 @@ class Hash {
 }
 
 class Hashes {
-  String status = 'fail';
+  String status = FAIL;
   String email = '';
   String hashname = '';
   String base64image = '';
@@ -105,7 +106,7 @@ class Hashes {
 
   factory Hashes.fromJson(Map<String, dynamic> json) {
     return Hashes(
-      status: json['status'] ?? 'fail',
+      status: json['status'] ?? FAIL,
       email: json['email'] ?? '',
       hashname: json['hashname'] ?? '',
       base64image: json['base64image'] ?? '',

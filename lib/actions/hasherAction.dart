@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:hasher/actions/hashesAction.dart';
 import 'package:hasher/config.dart';
+import 'package:hasher/constant.dart';
 import 'package:http/http.dart' as http;
 
 Future<Hasher> basicHasherInfo(String email) async {
@@ -25,16 +26,16 @@ Future<Hasher> basicHasherInfo(String email) async {
     try {
       return Hasher.fromJson(jsonDecode(response.body));
     } catch (e) {
-      return Hasher(status: 'fail');
+      return Hasher(status: FAIL);
     }
   } else {
-    return Hasher(status: 'fail');
+    return Hasher(status: FAIL);
     // throw Exception('Failed to create Hasher.');
   }
 }
 
 class Hasher {
-  String status = 'fail';
+  String status = FAIL;
   int id = 0;
   String email = '';
   String hashname = '';
@@ -53,7 +54,7 @@ class Hasher {
 
   factory Hasher.fromJson(Map<String, dynamic> json) {
     return Hasher(
-        status: json['status'] ?? 'fail',
+        status: json['status'] ?? FAIL,
         id: int.parse(json['id'] ?? '0'),
         email: json['email'] ?? '',
         hashname: json['hashname'] ?? '',

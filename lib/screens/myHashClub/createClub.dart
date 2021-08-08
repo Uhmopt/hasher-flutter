@@ -6,6 +6,7 @@ import 'package:hasher/actions/clubsAction.dart';
 import 'package:hasher/actions/countryAction.dart';
 import 'package:hasher/components/autoComplete.dart';
 import 'package:hasher/components/dialogs.dart';
+import 'package:hasher/constant.dart';
 import 'package:hasher/helper/helpers.dart';
 import 'package:hasher/layouts/index.dart';
 
@@ -66,7 +67,7 @@ class _CreateClubState extends State<CreateClub> {
               rundate: _textRunDate.text)
           .then((result) {
         SmartDialog.dismiss();
-        if (result.status == 'success') {
+        if (result.status == SUCCESS) {
           showMessage("Successfully Created!");
           Navigator.pop(context);
         } else {

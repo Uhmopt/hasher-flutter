@@ -45,7 +45,7 @@ class _HashRunListState extends State<HashRunList> {
     showLoading();
     getMyHashes(_email).then((clubList) {
       SmartDialog.dismiss();
-      if (clubList.status == 'success') {
+      if (clubList.status == SUCCESS) {
         setState(() {
           _clubList = clubList.hashes ?? [];
           _clubname = clubList.hashes![0].hashclubname;
@@ -67,7 +67,7 @@ class _HashRunListState extends State<HashRunList> {
         _hashName = hashName;
       });
       _loadClubList(callback: (clubList) {
-        if (clubList?.status == 'success') {
+        if (clubList?.status == SUCCESS) {
           _loadRunList(club: clubList?.hashes[0]?.hashclubname ?? '');
         }
       });

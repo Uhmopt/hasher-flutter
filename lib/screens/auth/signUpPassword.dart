@@ -45,7 +45,7 @@ class _SignupPasswordState extends State<SignupPassword> {
           showLoading();
           loginAction(_email, _controllerPassword.text).then((result) {
             SmartDialog.dismiss();
-            if (result.status == 'success') {
+            if (result.status == SUCCESS) {
               showMessage('Successfully Logged in.');
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => Home(isFirst: true)));

@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:hasher/actions/authAction.dart';
 import 'package:hasher/config.dart';
+import 'package:hasher/constant.dart';
 import 'package:http/http.dart' as http;
 
 Future<RunDetail> getRunDetail(
@@ -27,10 +29,10 @@ Future<RunDetail> getRunDetail(
     try {
       return new RunDetail.fromJson(jsonDecode(response.body));
     } catch (e) {
-      return new RunDetail(status: 'fail');
+      return new RunDetail(status: FAIL);
     }
   } else {
-    return new RunDetail(status: 'fail');
+    return new RunDetail(status: FAIL);
     // throw Exception('Failed to create RunDetail.');
   }
 }
@@ -57,16 +59,63 @@ Future<RunDetail> updateRunDetail(
     try {
       return new RunDetail.fromJson(jsonDecode(response.body));
     } catch (e) {
-      return new RunDetail(status: 'fail');
+      return new RunDetail(status: FAIL);
     }
   } else {
-    return new RunDetail(status: 'fail');
+    return new RunDetail(status: FAIL);
     // throw Exception('Failed to create RunDetail.');
   }
 }
 
+Future<Result> addRunDetail({
+  String club = '',
+  String runnumber = '',
+  String rundate = '',
+  String runtime = '',
+  String latitude = '',
+  String longitude = '',
+  String direction = '',
+  String onon = '',
+  String confirm = '',
+  String ondesc = '',
+}) async {
+  Map<String, String> headers = {
+    "content-type": "application/x-www-form-urlencoded; charset=utf-8"
+  };
+
+  var data = new Map<String, String>();
+  data['club'] = club;
+  data['runnumber'] = runnumber;
+  data['rundate'] = rundate;
+  data['runtime'] = runtime;
+  data['latitude'] = latitude;
+  data['longitude'] = longitude;
+  data['direction'] = direction;
+  data['onon'] = onon;
+  data['confirm'] = confirm;
+  data['ondesc'] = ondesc;
+
+  final response = await http.post(
+    Uri.parse(apiBase + '/adddetail_mo.php'),
+    headers: headers,
+    encoding: Encoding.getByName("utf-8"),
+    body: data,
+  );
+  log('addRunDetail: ' + response.body);
+  if (response.statusCode == 200) {
+    try {
+      return new Result.fromJson(jsonDecode(response.body));
+    } catch (e) {
+      return new Result(status: FAIL);
+    }
+  } else {
+    return new Result(status: FAIL);
+    // throw Exception('Failed to create RunList.');
+  }
+}
+
 class RunDetail {
-  String status = 'fail';
+  String status = FAIL;
   String rundate = '';
   String runtime = '';
   String runnum = '';
@@ -85,7 +134,7 @@ class RunDetail {
   String runattend = '';
 
   RunDetail({
-    this.status = 'fail',
+    this.status = FAIL,
     this.rundate = '',
     this.runtime = '',
     this.runnum = '',

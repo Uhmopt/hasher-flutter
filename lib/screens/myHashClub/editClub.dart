@@ -39,7 +39,7 @@ class _EditClubState extends State<EditClub> {
                 total: _textRuns.text)
             .then((result) {
           SmartDialog.dismiss();
-          if (result.status == 'success') {
+          if (result.status == SUCCESS) {
             showMessage("Successfully updated.");
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => Home()));

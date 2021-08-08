@@ -1,3 +1,6 @@
+const String SUCCESS = 'success';
+const String FAIL = 'fail';
+
 const String PREF_AUTH = 'PREF_AUTH';
 const String PREF_HASHER = 'PREF_HASHER';
 const String PREF_EMAIL = 'PREF_EMAIL';
@@ -25,3 +28,9 @@ const String MSG_NOT_SAVED = "Not Saved";
 const String MSG_SAVED = "Saved successfully.";
 const String MSG_INPUT_NUMBER = 'Please insert correct number';
 const String MSG_REQUIRE_FIELD = 'Please fill this field.';
+const String MSG_REQUIRE_RUN_LOCATION = 'Please select run location.';
+const String MSG_REQUIRE_ONON_LOCATION = 'Please select run location.';
+const String MSG_REQUIRE_ONON = 'Please select OnOn.';
+
+const double DEFAULT_LATITUDDE = 45.521563;
+const double DEFAULT_LONGITUDE = -122.677433;

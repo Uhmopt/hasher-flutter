@@ -78,7 +78,7 @@ class _SignupAvatarState extends State<SignupAvatar> {
           base64image: base64Encode(
               File(_avatarImage!.path.toString()).readAsBytesSync()),
         ).then((resilt) {
-          if (resilt.status == 'success') {
+          if (resilt.status == SUCCESS) {
             loginAction(email, password).then((value) {
               SmartDialog.dismiss();
               showMessage('Successfully uploaded');

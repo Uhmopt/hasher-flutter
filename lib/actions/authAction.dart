@@ -52,11 +52,11 @@ Future<Result> loginAction(String email, String password) async {
           try {
             return new Result.fromJson(jsonDecode(response.body));
           } catch (e) {
-            return new Result(status: 'fail');
+            return new Result(status: FAIL);
           }
         });
       } else {
-        return new Result(status: 'fail');
+        return new Result(status: FAIL);
       }
     });
   } else {
@@ -101,10 +101,10 @@ Future<Result> signUpAction(
     try {
       return new Result.fromJson(jsonDecode(response.body));
     } catch (e) {
-      return new Result(status: 'fail');
+      return new Result(status: FAIL);
     }
   } else {
-    return new Result(status: 'fail');
+    return new Result(status: FAIL);
     // throw Exception('Failed to create Result.');
   }
 }
@@ -128,10 +128,10 @@ Future<Result> forgotAction(String email) async {
     try {
       return new Result.fromJson(jsonDecode(response.body));
     } catch (e) {
-      return new Result(status: 'fail');
+      return new Result(status: FAIL);
     }
   } else {
-    return new Result(status: 'fail');
+    return new Result(status: FAIL);
     // throw Exception('Failed to create Result.');
   }
 }

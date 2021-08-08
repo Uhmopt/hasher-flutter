@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:hasher/actions/authAction.dart';
 import 'package:hasher/config.dart';
+import 'package:hasher/constant.dart';
 import 'package:http/http.dart' as http;
 
 Future<RunList> getRunList({String club = '', String email = ''}) async {
@@ -26,10 +27,10 @@ Future<RunList> getRunList({String club = '', String email = ''}) async {
     try {
       return new RunList.fromJson(jsonDecode(response.body));
     } catch (e) {
-      return new RunList(status: 'fail');
+      return new RunList(status: FAIL);
     }
   } else {
-    return new RunList(status: 'fail');
+    return new RunList(status: FAIL);
     // throw Exception('Failed to create RunList.');
   }
 }
@@ -119,10 +120,10 @@ Future<Result> addHareRun({
     try {
       return new Result.fromJson(jsonDecode(response.body));
     } catch (e) {
-      return new Result(status: 'fail');
+      return new Result(status: FAIL);
     }
   } else {
-    return new Result(status: 'fail');
+    return new Result(status: FAIL);
     // throw Exception('Failed to create RunList.');
   }
 }
@@ -154,21 +155,21 @@ Future<Result> updateHareRun({
     try {
       return new Result.fromJson(jsonDecode(response.body));
     } catch (e) {
-      return new Result(status: 'fail');
+      return new Result(status: FAIL);
     }
   } else {
-    return new Result(status: 'fail');
+    return new Result(status: FAIL);
     // throw Exception('Failed to create RunList.');
   }
 }
 
 class RunList {
-  String status = 'fail';
+  String status = FAIL;
   List<Run>? runlist = [];
   String total = '';
 
   RunList({
-    this.status = 'fail',
+    this.status = FAIL,
     this.runlist,
     this.total = '',
   });

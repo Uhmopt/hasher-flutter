@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:hasher/actions/authAction.dart';
 import 'package:hasher/components/dialogs.dart';
+import 'package:hasher/constant.dart';
 import 'package:hasher/helper/helpers.dart';
 import 'package:hasher/screens/auth/login.dart';
 
@@ -35,7 +36,7 @@ class ForgetPasswordState extends State<ForgetPassword> {
       try {
         forgotAction(_controllerEmail.text).then((value) {
           SmartDialog.dismiss();
-          if (value.status == 'success') {
+          if (value.status == SUCCESS) {
             showMessage("Password reset email has been sent to " +
                 _controllerEmail.text);
             setState(() {

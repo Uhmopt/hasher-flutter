@@ -1,8 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hasher/actions/runDetailAction.dart';
 import 'package:hasher/actions/runListAction.dart';
-import 'package:hasher/components/labelText.dart';
+import 'package:hasher/components/dialogs.dart';
 import 'package:hasher/components/locationPicker.dart';
 import 'package:hasher/components/radioGroup.dart';
 import 'package:hasher/constant.dart';
@@ -30,6 +35,8 @@ class _EditHareRunDetailFormState extends State<EditHareRunDetailForm> {
   TextEditingController _textRunDescription = new TextEditingController();
   bool _isEdit = false;
   String _onon = '';
+  LatLng _runLocation = LatLng(DEFAULT_LATITUDDE, DEFAULT_LONGITUDE);
+  LatLng _ononLocation = LatLng(DEFAULT_LATITUDDE, DEFAULT_LONGITUDE);
 
   Future _selectDate(TextEditingController tc) async {
     final picked = await showDatePicker(
@@ -58,7 +65,43 @@ class _EditHareRunDetailFormState extends State<EditHareRunDetailForm> {
   }
 
   _saveRunDetail() {
-    if (_editHareRunDetailForm.currentState!.validate()) {}
+    if (_editHareRunDetailForm.currentState!.validate()) {
+      if (_runLocation.latitude == DEFAULT_LATITUDDE &&
+          _runLocation.longitude == DEFAULT_LONGITUDE) {
+        showMessage(MSG_REQUIRE_RUN_LOCATION);
+        return;
+      }
+      if (_ononLocation.latitude == DEFAULT_LATITUDDE &&
+          _ononLocation.longitude == DEFAULT_LONGITUDE) {
+        showMessage(MSG_REQUIRE_ONON_LOCATION);
+        return;
+      }
+      if (_onon.isEmpty) {
+        showMessage(MSG_REQUIRE_ONON);
+        return;
+      }
+      showLoading();
+      addRunDetail(
+        club: widget.clubname,
+        confirm: _textRunFee.text,
+        direction: _textRunDirections.text,
+        ondesc: _textRunDescription.text,
+        rundate: _textRunDate.text,
+        runtime: _textRunTime.text,
+        runnumber: _textRunNumber.text,
+        onon: (_onon == 'Yes').toString(),
+        latitude: _runLocation.latitude.toString(),
+        longitude: _runLocation.longitude.toString(),
+      ).then((result) {
+        SmartDialog.dismiss();
+        if (result.status == SUCCESS) {
+          showMessage(MSG_SAVED);
+          Navigator.pop(context);
+        } else {
+          showMessage(MSG_NOT_SAVED);
+        }
+      });
+    }
   }
 
   _initValues() {
@@ -178,8 +221,16 @@ class _EditHareRunDetailFormState extends State<EditHareRunDetailForm> {
                   child: LocationPicker(
                     label: 'Run Location',
                     color: Colors.indigoAccent,
-                    onSelect: (v) {},
-                    // value: _runLocation,
+                    onSelect: (latlng, pickResult) {
+                      setState(() {
+                        _runLocation = latlng;
+                        if (_textRunDirections.text.trim().isEmpty) {
+                          _textRunDirections.text =
+                              pickResult.formattedAddress ?? '';
+                        }
+                      });
+                    },
+                    location: _runLocation,
                   )),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 10),
@@ -235,6 +286,22 @@ class _EditHareRunDetailFormState extends State<EditHareRunDetailForm> {
                   inputFormatters: inputNumberFormatter,
                 ),
               ),
+              Container(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: LocationPicker(
+                    label: 'OnOn Location',
+                    color: Colors.pinkAccent,
+                    onSelect: (latlng, pickResult) {
+                      setState(() {
+                        _ononLocation = latlng;
+                        if (_textRunDescription.text.trim().isEmpty) {
+                          _textRunDescription.text =
+                              pickResult.formattedAddress ?? '';
+                        }
+                      });
+                    },
+                    location: _ononLocation,
+                  )),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: TextFormField(
