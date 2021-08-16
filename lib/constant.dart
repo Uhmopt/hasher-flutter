@@ -31,6 +31,7 @@ const String MSG_REQUIRE_FIELD = 'Please fill this field.';
 const String MSG_REQUIRE_RUN_LOCATION = 'Please select run location.';
 const String MSG_REQUIRE_ONON_LOCATION = 'Please select run location.';
 const String MSG_REQUIRE_ONON = 'Please select OnOn.';
+const String MSG_NO_DATA = 'There is no data to display.';
 
 const double DEFAULT_LATITUDDE = 45.521563;
 const double DEFAULT_LONGITUDE = -122.677433;

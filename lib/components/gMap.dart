@@ -11,9 +11,11 @@ class GMap extends StatefulWidget {
     Key? key,
     this.location = const LatLng(DEFAULT_LATITUDDE, DEFAULT_LONGITUDE),
     required this.onSelect,
+    this.readOnly = false,
   }) : super(key: key);
   LatLng location = LatLng(DEFAULT_LATITUDDE, DEFAULT_LONGITUDE);
   Function(LatLng, PickResult) onSelect = (v, p) {};
+  bool readOnly = false;
 
   @override
   _GMapState createState() => _GMapState();
@@ -38,7 +40,7 @@ class _GMapState extends State<GMap> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PlacePicker(
-        apiKey: "AIzaSyDb9BhJ4sK8l0ySWSaSTfGlbYWZozXBEJs",
+        apiKey: "AIzaSyDDQ7LN9NLxnW5NmpPmUQvnbtqMmpep_nA",
         onPlacePicked: (result) {
           widget.onSelect(
               LatLng(

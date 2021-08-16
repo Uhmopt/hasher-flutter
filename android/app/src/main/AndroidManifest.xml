@@ -3,14 +3,14 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
     <!-- add these -->
-    <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <application
           android:label="HHH"
           android:icon="@mipmap/ic_launcher">
           <!-- TODO: Add your API key here -->
           <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDb9BhJ4sK8l0ySWSaSTfGlbYWZozXBEJs"/>
+            android:value="AIzaSyDDQ7LN9NLxnW5NmpPmUQvnbtqMmpep_nA"/>
           <activity
               android:name=".MainActivity"
               android:launchMode="singleTop"

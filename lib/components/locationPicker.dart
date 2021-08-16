@@ -16,11 +16,13 @@ class LocationPicker extends StatefulWidget {
     this.color = Colors.indigoAccent,
     this.location = const LatLng(DEFAULT_LATITUDDE, DEFAULT_LONGITUDE),
     required this.onSelect,
+    this.readOnly = false,
   }) : super(key: key);
   String label = '';
   Color color = Colors.indigoAccent;
   LatLng location = LatLng(DEFAULT_LATITUDDE, DEFAULT_LONGITUDE);
   Function(LatLng, PickResult) onSelect = (v, p) {};
+  bool readOnly = false;
 
   @override
   _LocationPickerState createState() => _LocationPickerState();
@@ -39,10 +41,11 @@ class _LocationPickerState extends State<LocationPicker> {
                 builder: (context) => GMap(
                   location: widget.location,
                   onSelect: widget.onSelect,
+                  readOnly: widget.readOnly,
                 ),
               ));
         },
-        // elevation: 10,
+        elevation: 5,
         color: Colors.white,
         child: Column(
           children: [
@@ -55,6 +58,13 @@ class _LocationPickerState extends State<LocationPicker> {
                   fontWeight: FontWeight.bold,
                   color: widget.color,
                 ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 3),
+              child: Text(
+                'Tap to see the map',
+                textScaleFactor: 1.1,
               ),
             ),
             Container(
