@@ -3,13 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:hasher/actions/hashesAction.dart';
 import 'package:hasher/actions/runListAction.dart';
 import 'package:hasher/components/labelText.dart';
+import 'package:hasher/screens/hareLineView/editHareRunDetail.dart';
 import 'package:hasher/screens/myHashClub/runDetails.dart';
 
 // ignore: must_be_immutable
 class HashRunListCard extends StatefulWidget {
   Run? run = new Run();
   String clubname = "";
-  HashRunListCard({Key? key, this.run, this.clubname = ""}) : super(key: key);
+  bool readOnly = true;
+  HashRunListCard(
+      {Key? key, this.run, this.clubname = "", this.readOnly = true})
+      : super(key: key);
 
   @override
   _HashRunListCardState createState() => _HashRunListCardState();
@@ -47,6 +51,33 @@ class _HashRunListCardState extends State<HashRunListCard> {
                 value: widget.run?.runnumber ?? '',
                 color: Colors.pinkAccent,
               ),
+              widget.readOnly
+                  ? Container()
+                  : Container(
+                      padding:
+                          const EdgeInsets.only(top: 10, left: 20, right: 20),
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        child: Text(
+                          "Add or Edit Details",
+                          textScaleFactor: 1.2,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditHareRunDetail(
+                                  run: widget.run ?? Run(),
+                                  clubname: widget.clubname,
+                                ),
+                              ));
+                        },
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.indigoAccent)),
+                      ),
+                    ),
               Container(
                 padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
                 width: double.infinity,

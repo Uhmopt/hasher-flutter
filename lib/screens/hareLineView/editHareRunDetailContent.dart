@@ -1,16 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hasher/actions/runDetailAction.dart';
 import 'package:hasher/actions/runListAction.dart';
 import 'package:hasher/screens/hareLineView/editHareRunDetailForm.dart';
 
 // ignore: must_be_immutable
 class EditHareRunDetailContent extends StatefulWidget {
   EditHareRunDetailContent(
-      {Key? key, required this.run, this.clubname = '', this.committee})
+      {Key? key,
+      required this.run,
+      this.clubname = '',
+      required this.runDetail})
       : super(key: key);
   Run run = new Run();
   String clubname = "";
-  List<String>? committee = [];
+  RunDetail runDetail = RunDetail();
 
   @override
   _EditHareRunDetailContentState createState() =>
@@ -42,6 +46,7 @@ class _EditHareRunDetailContentState extends State<EditHareRunDetailContent> {
           child: EditHareRunDetailForm(
             run: widget.run,
             clubname: widget.clubname,
+            runDetail: widget.runDetail,
           ),
         ),
       ],

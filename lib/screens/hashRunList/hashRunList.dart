@@ -158,10 +158,13 @@ class _HashRunListState extends State<HashRunList> {
                                     ),
                                   )))
                         ]
-                      : _runList.runlist!.map<Widget>((run) => HashRunListCard(
+                      : _runList.runlist!.map<Widget>(
+                          (Run run) => HashRunListCard(
                             run: run,
                             clubname: _clubname,
-                          ))))
+                            readOnly: run.email != _email,
+                          ),
+                        ))),
                 ],
               ),
             ),

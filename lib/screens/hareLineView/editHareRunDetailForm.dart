@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,11 +13,15 @@ import 'package:hasher/helper/helpers.dart';
 
 // ignore: must_be_immutable
 class EditHareRunDetailForm extends StatefulWidget {
-  EditHareRunDetailForm({Key? key, required this.run, this.clubname = ''})
+  EditHareRunDetailForm(
+      {Key? key,
+      required this.run,
+      this.clubname = '',
+      required this.runDetail})
       : super(key: key);
   Run run = new Run();
-  List<String> committee = [];
   String clubname = "";
+  RunDetail runDetail = RunDetail();
 
   @override
   _EditHareRunDetailFormState createState() => _EditHareRunDetailFormState();
@@ -110,6 +112,19 @@ class _EditHareRunDetailFormState extends State<EditHareRunDetailForm> {
       _textRunDate.text = widget.run.rundate;
       _textRunTime.text = widget.run.runtime;
       _textRunTime.text = widget.run.runtime;
+
+      _textRunDirections.text = widget.runDetail.direction;
+      _textRunFee.text = widget.runDetail.onfee;
+      _textRunDescription.text = widget.runDetail.ondesc;
+      _onon = widget.runDetail.onon ? 'Yes' : 'No';
+      try {
+        _runLocation = LatLng(double.parse(widget.runDetail.latitude),
+            double.parse(widget.runDetail.longitude));
+      } catch (e) {
+        _runLocation = LatLng(DEFAULT_LATITUDDE, DEFAULT_LONGITUDE);
+      }
+      // _ononLocation = LatLng(double.parse(widget.runDetail.latitude),
+      //     double.parse(widget.runDetail.longitude));
 
       _isEdit = int.parse(widget.run.hashrunid) > 0;
     });

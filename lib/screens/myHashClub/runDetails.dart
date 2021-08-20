@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hasher/actions/attendAction.dart';
 import 'package:hasher/actions/hashesAction.dart';
 import 'package:hasher/actions/runDetailAction.dart';
+import 'package:hasher/components/checkBox.dart';
 import 'package:hasher/components/dialogs.dart';
 import 'package:hasher/components/labelText.dart';
 import 'package:hasher/components/locationPicker.dart';
@@ -22,14 +24,17 @@ class RunDetails extends StatefulWidget {
 }
 
 class _RunDetailsState extends State<RunDetails> {
-  String _email = '';
+  String _hasher = '';
   RunDetail? _runDetail;
+  bool _isDetail = false;
+
   _init() {
     showLoading();
     SharedPreferences.getInstance().then((prefs) {
       String email = prefs.getString(PREF_EMAIL) ?? '';
+      String hasher = prefs.getString(PREF_HASHER) ?? '';
       setState(() {
-        _email = email;
+        _hasher = hasher;
       });
       getRunDetail(
               club: widget.hash?.hashclubname ?? '',
@@ -41,6 +46,30 @@ class _RunDetailsState extends State<RunDetails> {
         });
         SmartDialog.dismiss();
       });
+    });
+  }
+
+  _attend() {
+    String stat = '';
+    if (_runDetail?.runattend.isEmpty ?? true) {
+      stat = 'regi';
+    }
+    showLoading();
+    updateAttend(
+      stat: stat,
+      club: widget.hash?.hashclubname ?? '',
+      hasher: _hasher,
+      runid: _runDetail?.id ?? '',
+      rundate: _runDetail?.rundate ?? '',
+      runtime: _runDetail?.runtime ?? '',
+    ).then((result) {
+      if (result.status == SUCCESS) {
+        showMessage(MSG_SAVED);
+        _init();
+      } else {
+        showMessage(MSG_NOT_SAVED);
+        SmartDialog.dismiss();
+      }
     });
   }
 
@@ -159,6 +188,90 @@ class _RunDetailsState extends State<RunDetails> {
                               readOnly: true,
                             ),
                           ),
+                          Container(
+                            padding: const EdgeInsets.only(top: 40, bottom: 10),
+                            child: Text(
+                              'Co ONON',
+                              textScaleFactor: 1.4,
+                              style: TextStyle(
+                                  color: Colors.pinkAccent,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Container(
+                            child: (_runDetail?.cononon ?? []).isNotEmpty
+                                ? Wrap(
+                                    children: List<Widget>.from(
+                                        (_runDetail?.cononon ?? [])
+                                            .map((cononon) => Chip(
+                                                  label: Text(cononon),
+                                                ))),
+                                    spacing: 5,
+                                  )
+                                : Container(
+                                    child: Text(
+                                      MSG_NO_DATA,
+                                      textScaleFactor: 1.1,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                          ),
+                          Container(
+                            child: ElevatedButton(
+                              onPressed: _attend,
+                              child: Container(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 15),
+                                child: Text(
+                                  "Confirm Attendance",
+                                  textScaleFactor: 1.3,
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                            padding: const EdgeInsets.only(top: 30, bottom: 20),
+                            width: double.infinity,
+                          ),
+                          Container(
+                            child: CheckBoxLabel(
+                              label: 'See how is going',
+                              value: _isDetail,
+                              onChanged: (v) {
+                                setState(() {
+                                  _isDetail = v ?? false;
+                                });
+                              },
+                              checkColor: Colors.indigoAccent,
+                              labelColor: Colors.indigoAccent,
+                              textScaleFactor: 1.3,
+                            ),
+                            width: double.infinity,
+                            alignment: Alignment.center,
+                          ),
+                          _isDetail
+                              ? Container(
+                                  child: Container(
+                                    child: (_runDetail?.conatt ?? []).isNotEmpty
+                                        ? Wrap(
+                                            children: List<Widget>.from(
+                                                (_runDetail?.conatt ?? [])
+                                                    .map((conatt) => Chip(
+                                                          label: Text(conatt),
+                                                        ))),
+                                            spacing: 5,
+                                          )
+                                        : Container(
+                                            child: Text(
+                                              MSG_NO_DATA,
+                                              textScaleFactor: 1.1,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                  ),
+                                )
+                              : Container(),
                         ],
                       )
                     : Center(

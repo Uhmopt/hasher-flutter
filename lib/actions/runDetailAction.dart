@@ -91,7 +91,7 @@ Future<Result> addRunDetail({
   data['latitude'] = latitude;
   data['longitude'] = longitude;
   data['direction'] = direction;
-  data['onon'] = onon;
+  data['onon'] = onon == 'Yes' ? '1' : '0';
   data['confirm'] = confirm;
   data['ondesc'] = ondesc;
 
@@ -121,7 +121,7 @@ class RunDetail {
   String runnum = '';
   String location = '';
   String direction = '';
-  String onon = '';
+  bool onon = false;
   String onfee = '';
   String longitude = '';
   String latitude = '';
@@ -140,7 +140,7 @@ class RunDetail {
     this.runnum = '',
     this.location = '',
     this.direction = '',
-    this.onon = '',
+    this.onon = false,
     this.onfee = '',
     this.longitude = '',
     this.latitude = '',
@@ -161,7 +161,7 @@ class RunDetail {
       runnum: json['runnum'] ?? "",
       location: json['location'] ?? "",
       direction: json['direction'] ?? "",
-      onon: json['onon'] ?? "",
+      onon: int.parse(json['onon'] ?? "0").abs() > 0,
       onfee: json['onfee'] ?? "",
       longitude: json['longitude'] ?? "",
       latitude: json['latitude'] ?? "",

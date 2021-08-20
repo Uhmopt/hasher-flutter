@@ -63,7 +63,9 @@ class _LocationPickerState extends State<LocationPicker> {
             Container(
               padding: const EdgeInsets.symmetric(vertical: 3),
               child: Text(
-                'Tap to see the map',
+                widget.readOnly
+                    ? 'Tap to see the map'
+                    : 'Tap to pick the location',
                 textScaleFactor: 1.1,
               ),
             ),
